@@ -1,14 +1,9 @@
 package com.example.proyect;
 
-
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.Editable;
-
-import androidx.annotation.Nullable;
 
 public class MyOpenHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "data.db";
