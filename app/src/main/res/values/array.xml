@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string-array name="nacionalidad">
+       <item> Seleccione </item>
+       <item> Ecuatoriana </item>
+       <item> Afroamericano </item>
+       <item>Indigena</item>
+   </string-array>>
+
+    <string-array name="genero">
+        <item> Seleccione </item>
+        <item> Masculino </item>
+        <item> Femenino </item>
+        <item>Otros</item>
+    </string-array>>
+
+    <string-array name="Provincia">
+        <item> Seleccione </item>
+        <item> Guayas </item>
+        <item> Imbabura </item>
+        <item> El Oro </item>
+        <item> Manabí </item>
+        <item>Napo</item>
+        <item> Pichincha </item>
+        <item> Cotopaxi </item>
+    </string-array>>
+
+    <string-array name="Ciudad">
+        <item> Seleccione </item>
+        <item> Durán </item>
+        <item> Guayaquil </item>
+        <item> Daule </item>
+        <item> Milagro </item>
+        <item>Balzar</item>
+        <item> Samborondón </item>
+        <item> Pedro Carbo </item>
+    </string-array>>
+
+</resources>
