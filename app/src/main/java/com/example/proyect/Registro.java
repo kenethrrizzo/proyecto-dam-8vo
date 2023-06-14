@@ -189,25 +189,6 @@ public class Registro extends AppCompatActivity implements DatePickerDialog.OnDa
         } else {
             Toast.makeText(Registro.this, "Ingresa todos los campos", Toast.LENGTH_SHORT).show();
         }
-       /* EditText nombre_tmp = (EditText) findViewById(R.id.txt_name);
-        EditText apellido_tmp = (EditText) findViewById(R.id.txt_apellidos);
-        EditText cedula_tmp = (EditText) findViewById(R.id.txtcedula);
-        EditText fecha_tmp = (EditText) findViewById(R.id.txt_date);
-        EditText phone_tmp = (EditText) findViewById(R.id.txt_Phone);
-
-        MyOpenHelper dbHelper = new MyOpenHelper(v.getContext());
-        final SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if(db != null){
-            //Hacer las operaciones que queramos sobre la base de datos
-            ContentValues cv =new ContentValues();
-            cv.put("nombres", nombre_tmp.getText().toString());
-            cv.put("apellidos", apellido_tmp.getText().toString());
-           // cv.put("cedula", cedula_tmp.getText().toString());
-
-            db.insert("usuario",null,cv);
-            Toast.makeText(v.getContext(), "Regristrado Correctamente", Toast.LENGTH_SHORT).show();
-        }*/
-
     }
 
 

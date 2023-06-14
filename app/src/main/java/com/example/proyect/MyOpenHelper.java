@@ -11,10 +11,6 @@ import android.text.Editable;
 import androidx.annotation.Nullable;
 
 public class MyOpenHelper extends SQLiteOpenHelper{
-
-    //private static final String COMMENTS_TABLE_CREATE ="CREATE TABLE usuarios(_id INTEGER PRIMARY KEY AUTOINCREMENT,nombres TEXT,apellidos TEXT)";
-    //private static final String DB_NAME = "DatosProyecto.sqlite";
-    //private static final int DB_VERSION = 1;
     public static final String DATABASE_NAME = "data.db";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE_NAME = "Usuario";
@@ -29,11 +25,8 @@ public class MyOpenHelper extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        //db.execSQL(COMMENTS_TABLE_CREATE);
         String createTableQuery = "CREATE TABLE " + TABLE_NAME + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_NAME + " TEXT, "
@@ -44,7 +37,6 @@ public class MyOpenHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         String dropTableQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
         db.execSQL(dropTableQuery);
         onCreate(db);
