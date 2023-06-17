@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+
+        <ImageView
+            android:id="@+id/image_product"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/text_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    tools:text="Product Name" />
+
+                <TextView
+                    android:id="@+id/text_product_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    tools:text="Product Description" />
+
+                <TextView
+                    android:id="@+id/text_product_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FF4081"
+                    android:textSize="14sp"
+                    tools:text="Price: $19.99" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/button_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/baseline_shopping_cart_24" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

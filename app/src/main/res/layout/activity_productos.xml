@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.ActivityProductos">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/header_productos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#1976D2"
@@ -23,6 +24,63 @@
             android:text="Productos"
             android:textColor="#ffff"
             android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_productos"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_productsearch"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="0.5"
+                android:hint="Buscar por descripción"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:counterEnabled="true"
+                app:endIconMode="clear_text"
+                app:endIconTint="#0288D1"
+                app:hintTextColor="#918F8F"
+                app:startIconDrawable="@drawable/baseline_search_24"
+                app:startIconTint="#0288D1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_productsearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/button_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/baseline_filter_alt_24" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            tools:listitem="@layout/item_product_card" />
 
     </LinearLayout>
 
