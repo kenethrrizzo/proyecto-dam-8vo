@@ -1,4 +1,4 @@
-package com.example.proyect;
+package com.example.coffeestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,14 +10,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-import android.text.TextUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 import android.widget.Spinner;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -26,10 +22,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import java.text.DateFormat;
 import java.util.Calendar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class ConsultarUsuario extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {

@@ -1,4 +1,4 @@
-package com.example.proyect;
+package com.example.coffeestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 

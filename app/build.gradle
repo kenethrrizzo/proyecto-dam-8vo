@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.proyect'
+    namespace 'com.example.coffeestore'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.proyect"
+        applicationId "com.example.coffeestore"
         minSdk 26
         targetSdk 33
         versionCode 1
