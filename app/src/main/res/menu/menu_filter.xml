@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/filter_bebida_caliente"
+        android:title="Bebida caliente" />
+    <item
+        android:id="@+id/filter_bebida_fria"
+        android:title="Bebida fría" />
+    <item
+        android:id="@+id/filter_panes"
+        android:title="Panes" />
+    <item
+        android:id="@+id/filter_pasteles"
+        android:title="Pasteles" />
+    <item
+        android:id="@+id/filter_limpiar_filtro"
+        android:title="Limpiar filtro" />
+</menu>
