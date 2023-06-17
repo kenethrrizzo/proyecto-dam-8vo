@@ -1,10 +1,12 @@
-package com.example.coffeestore;
+package com.example.coffeestore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Productos extends AppCompatActivity {
+import com.example.coffeestore.R;
+
+public class ActivityProductos extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

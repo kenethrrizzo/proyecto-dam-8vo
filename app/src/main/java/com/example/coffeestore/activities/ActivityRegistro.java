@@ -1,4 +1,4 @@
-package com.example.coffeestore;
+package com.example.coffeestore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,20 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import android.widget.Spinner;
-import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.coffeestore.MyOpenHelper;
+import com.example.coffeestore.R;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Registro extends AppCompatActivity{
+public class ActivityRegistro extends AppCompatActivity{
 
     private String nSpinnerGenero ="";
     private String nSpinnerProvincia= "";
@@ -128,7 +121,7 @@ public class Registro extends AppCompatActivity{
 
             boolean success = databaseHelper.insertData(name, apellidos, cedula, genero, phone, direccion, provincia, ciudad,password);
             if (success) {
-                Toast.makeText(Registro.this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityRegistro.this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
                 // Limpiar los campos después de guardar los datos
                 layoutName.getEditText().setText("");
                 layoutApellido.getEditText().setText("");
@@ -138,21 +131,21 @@ public class Registro extends AppCompatActivity{
                 layoutPassword.getEditText().setText("");
 
             } else {
-                Toast.makeText(Registro.this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityRegistro.this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(Registro.this, "Ingresa todos los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityRegistro.this, "Ingresa todos los campos", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void Regresar(View v){
-        Intent call_principal = new Intent(v.getContext(), Login.class);
+        Intent call_principal = new Intent(v.getContext(), ActivityLogin.class);
         startActivity(call_principal);
     }
 
     public void Consultar(View v)
     {
-        Intent call_consultar_usuario = new Intent(v.getContext(), ConsultarUsuario.class);
+        Intent call_consultar_usuario = new Intent(v.getContext(), ActivityConsultarUsuario.class);
         startActivity(call_consultar_usuario);
     }
 }

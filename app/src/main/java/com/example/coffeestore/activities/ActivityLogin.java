@@ -1,4 +1,4 @@
-package com.example.coffeestore;
+package com.example.coffeestore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import  android.content.Intent;
 
+import com.example.coffeestore.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 
-public class Login extends AppCompatActivity {
+public class ActivityLogin extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class Login extends AppCompatActivity {
         finishAffinity();
     }
     public void CrearCuenta (View v){
-        Intent call_principal = new Intent(v.getContext(), Registro.class);
+        Intent call_principal = new Intent(v.getContext(), ActivityProductos.class);
         startActivity(call_principal);
     }
 }

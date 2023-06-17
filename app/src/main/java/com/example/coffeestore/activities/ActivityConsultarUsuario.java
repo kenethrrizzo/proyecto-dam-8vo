@@ -1,31 +1,18 @@
-package com.example.coffeestore;
+package com.example.coffeestore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import android.content.ContentValues;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.widget.DatePicker;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import java.text.DateFormat;
-import java.util.Calendar;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.coffeestore.R;
 
-public class ConsultarUsuario extends AppCompatActivity  {
+public class ActivityConsultarUsuario extends AppCompatActivity  {
 
     private String nSpinnerGenero = "";
     private String nSpinnerProvincia= "";
