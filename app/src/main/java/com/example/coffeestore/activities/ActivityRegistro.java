@@ -11,7 +11,7 @@ import android.widget.Toast;
 import android.widget.Spinner;
 import android.content.Intent;
 
-import com.example.coffeestore.MyOpenHelper;
+import com.example.coffeestore.database.MyOpenHelper;
 import com.example.coffeestore.R;
 import com.google.android.material.textfield.TextInputLayout;
 

@@ -1,4 +1,4 @@
-package com.example.coffeestore;
+package com.example.coffeestore.controls;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
