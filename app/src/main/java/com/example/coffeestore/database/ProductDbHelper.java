@@ -96,7 +96,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                 "Capuchino",
                 "Café caliente con espuma de leche",
                 28.5,
-                "https://upload.wikimedia.org/wikipedia/commons/0/00/Cappuccino_PeB.jpg",
+                "https://babycocina.com/wp-content/uploads/2020/06/cafe-capuchino.jpg",
                 CategoriaProducto.BEBIDA_CALIENTE
         );
         productos.add(producto5);
@@ -132,7 +132,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                 "Mocaccino",
                 "Café caliente con chocolate y crema",
                 30.0,
-                "https://elmundoenrecetas.s3.amazonaws.com/uploads/recipe/main_image/1093/mocaccino.webp",
+                "https://s3.ppllstatics.com/diariovasco/www/multimedia/202206/24/media/cortadas/mocacchino2-RzxK6jUZ6sUNGCintrcYBkP-1248x770@Diario%20Vasco.jpg",
                 CategoriaProducto.BEBIDA_CALIENTE
         );
         productos.add(producto9);
@@ -141,7 +141,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                 "Smoothie de frutas",
                 "Bebida fría batida con variedad de frutas",
                 32.5,
-                "https://e00-xlk-cooking-elmundo.uecdn.es/files/gallery_image_mobile_cover/uploads/2023/02/28/63fe6ec911620.jpeg",
+                "https://www.cardamomo.news/__export/1656619064982/sites/debate/img/2022/06/30/smoothies.jpeg_423682103.jpeg",
                 CategoriaProducto.BEBIDA_FRIA
         );
         productos.add(producto10);
