@@ -25,38 +25,22 @@ import java.util.Calendar;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class ConsultarUsuario extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class ConsultarUsuario extends AppCompatActivity  {
 
-    private String nSpinnerNacionalidad = "";
     private String nSpinnerGenero = "";
-    EditText txt_Fechas;
+    private String nSpinnerProvincia= "";
+    private String nSpinnerCiudad = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_usuario);
 
-        Spinner spinner = (Spinner) findViewById(R.id.sp_nacionalidad);
         Spinner spinner2 = (Spinner) findViewById(R.id.sp_genero);
         Spinner spinner3 = (Spinner) findViewById(R.id.sp_provincia);
         Spinner spinner4 = (Spinner) findViewById(R.id.sp_ciudad);
 
-        txt_Fechas= findViewById(R.id.txt_fechas);
-
-        ImageButton button = (ImageButton) findViewById(R.id.btn_Fecha);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerFragment datePickerFragment = new DatePickerFragment();
-                datePickerFragment.show(getSupportFragmentManager(), "datePicker");
-            }
-        });
-
-
         //Create ArrayAdapter
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.nacionalidad,
-                android.R.layout.simple_spinner_item);
-
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.genero,
                 android.R.layout.simple_spinner_item);
 
@@ -67,63 +51,42 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
                 android.R.layout.simple_spinner_item);
 
         // especifico el diseño que se utilizara cuando aparezca la lista de opciones
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
         //Aplicar el adaptador al spinner
-        spinner.setAdapter(adapter);
         spinner2.setAdapter(adapter2);
         spinner3.setAdapter(adapter3);
         spinner4.setAdapter(adapter4);
 
         //Controlar acciones del spinner
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerNacionalidad = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerNacionalidad, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 nSpinnerGenero = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerGenero, Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
         spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerNacionalidad = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerNacionalidad, Toast.LENGTH_SHORT).show();
+                nSpinnerProvincia = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerProvincia, Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
         spinner4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerNacionalidad = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerNacionalidad, Toast.LENGTH_SHORT).show();
+                nSpinnerCiudad = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerCiudad, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -134,37 +97,7 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
 
     }
 
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        Integer id = view.getId();
-        if (id.equals(R.id.rbd_casado)) {
-            if (checked) {
-                Toast.makeText(getApplicationContext(), "Seleccionaste Casado", Toast.LENGTH_SHORT).show();
-            }
-        } else if (id.equals(R.id.rbd_soltero)) {
-            if (checked) {
-                Toast.makeText(getApplicationContext(), "Seleccionaste Soltero", Toast.LENGTH_SHORT).show();
-            }
-        } else if (id.equals(R.id.rbd_divorciado)) {
-            if (checked) {
-                Toast.makeText(getApplicationContext(), "Seleccionaste Divorciado", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        txt_Fechas.setText(currentDateString);
-    }
-
-
-    public void buscarUsuario(View v) {
+   /* public void buscarUsuario(View v) {
         TextInputLayout idInputLayout = findViewById(R.id.layoutId);
         String idString = idInputLayout.getEditText().getText().toString().trim();
 
@@ -175,7 +108,6 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
             Toast.makeText(ConsultarUsuario.this, "Ingresa un ID válido", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void searchDataById(int id) {
         MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
@@ -183,7 +115,12 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
         String[] projection = {
                 MyOpenHelper.COLUMN_NAME,
                 MyOpenHelper.COLUMN_APELLIDO,
-                MyOpenHelper.COLUMN_PHONE
+                MyOpenHelper.COLUMN_CEDULA,
+                MyOpenHelper.COLUMN_GENERO,
+                MyOpenHelper.COLUMN_PHONE,
+                MyOpenHelper.COLUMN_DIRECCION,
+                MyOpenHelper.COLUMN_PROVINCIA,
+                MyOpenHelper.COLUMN_CIUDAD,
         };
 
         String selection = MyOpenHelper.COLUMN_ID + " = ?";
@@ -202,16 +139,25 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
         if (cursor.moveToFirst()) {
             @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_NAME));
             @SuppressLint("Range") String apellidos = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_APELLIDO));
+            @SuppressLint("Range") String cedula = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_CEDULA));
+            @SuppressLint("Range") String genero = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_GENERO));
             @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_PHONE));
+            @SuppressLint("Range") String direccion = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_DIRECCION));
+            @SuppressLint("Range") String provincia = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_PROVINCIA));
+            @SuppressLint("Range") String ciudad = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_CIUDAD));
 
             // Aquí puedes utilizar los datos obtenidos, por ejemplo, mostrarlos en los TextInputLayout
             TextInputLayout nameInputLayout = findViewById(R.id.layoutName);
-            TextInputLayout emailInputLayout = findViewById(R.id.layoutApellido);
+            TextInputLayout apellidoInputLayout = findViewById(R.id.layoutApellido);
+            TextInputLayout cedulaInputLayout = findViewById(R.id.layoutCedula);
             TextInputLayout phoneInputLayout = findViewById(R.id.layouttelefono);
+            TextInputLayout direccionInputLayout = findViewById(R.id.layoutDireccion);
 
             nameInputLayout.getEditText().setText(name);
-            emailInputLayout.getEditText().setText(apellidos);
+            apellidoInputLayout.getEditText().setText(apellidos);
+            cedulaInputLayout.getEditText().setText(cedula);
             phoneInputLayout.getEditText().setText(phone);
+            direccionInputLayout.getEditText().setText(direccion);
         } else {
             Toast.makeText(ConsultarUsuario.this, "No se encontraron resultados", Toast.LENGTH_SHORT).show();
         }
@@ -224,21 +170,39 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
         TextInputLayout idInputLayout = findViewById(R.id.layoutId);
         TextInputLayout nameInputLayout = findViewById(R.id.layoutName);
         TextInputLayout apellidoInputLayout = findViewById(R.id.layoutApellido);
+        TextInputLayout cedulaInputLayout = findViewById(R.id.layoutCedula);
+        TextInputLayout phoneInputLayout = findViewById(R.id.layouttelefono);
+        TextInputLayout direccionInputLayout = findViewById(R.id.layoutDireccion);
+
+        Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
+        Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
+        Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
 
         String idString = idInputLayout.getEditText().getText().toString().trim();
         String name = nameInputLayout.getEditText().getText().toString().trim();
         String apellidos = apellidoInputLayout.getEditText().getText().toString().trim();
+        String cedulaString = cedulaInputLayout.getEditText().getText().toString().trim();
+        String direccion = direccionInputLayout.getEditText().getText().toString().trim();
+        String phones= phoneInputLayout.getEditText().getText().toString().trim();
+        String genero = nSpinnerGenero.getSelectedItem().toString();
+        String provincia = nSpinnerProvincia.getSelectedItem().toString();
+        String ciudad = nSpinnerCiudad.getSelectedItem().toString();
 
-        if (!TextUtils.isEmpty(idString) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos)) {
+        if (!TextUtils.isEmpty(idString) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos)&& !TextUtils.isEmpty(cedulaString)) {
             int id = Integer.parseInt(idString);
-            boolean success = updateData(id, name, apellidos);
+            int cedula = Integer.parseInt(cedulaString);
+            int phone = Integer.parseInt(phones);
+
+            boolean success = updateData(id, name, apellidos, cedula,genero,phone,direccion,provincia,ciudad);
             if (success) {
                 Toast.makeText(ConsultarUsuario.this, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
                 // Limpiar los campos después de actualizar los datos
                 idInputLayout.getEditText().setText("");
                 nameInputLayout.getEditText().setText("");
                 apellidoInputLayout.getEditText().setText("");
-               // phoneInputLayout.getEditText().setText("");
+                cedulaInputLayout.getEditText().setText("");
+                phoneInputLayout.getEditText().setText("");
+                direccionInputLayout.getEditText().setText("");
             } else {
                 Toast.makeText(ConsultarUsuario.this, "Error al actualizar los datos", Toast.LENGTH_SHORT).show();
             }
@@ -246,14 +210,19 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
             Toast.makeText(ConsultarUsuario.this, "Ingresa todos los campos", Toast.LENGTH_SHORT).show();
         }
     }
-    private boolean updateData(int id, String name, String apellidos) {
+    private boolean updateData(int id, String name, String apellidos,int cedula, String genero, int  phone, String direccion, String provincia, String ciudad) {
         MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(MyOpenHelper.COLUMN_NAME, name);
         contentValues.put(MyOpenHelper.COLUMN_APELLIDO, apellidos);
-        //contentValues.put(MyOpenHelper.COLUMN_PHONE, phone);
+        contentValues.put(MyOpenHelper.COLUMN_CEDULA, cedula);
+        contentValues.put(MyOpenHelper.COLUMN_GENERO, genero);
+        contentValues.put(MyOpenHelper.COLUMN_PHONE, phone);
+        contentValues.put(MyOpenHelper.COLUMN_DIRECCION, direccion);
+        contentValues.put(MyOpenHelper.COLUMN_PROVINCIA, provincia);
+        contentValues.put(MyOpenHelper.COLUMN_CIUDAD, ciudad);
 
         String selection = MyOpenHelper.COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(id)};
@@ -269,13 +238,20 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
         TextInputLayout idInputLayout = findViewById(R.id.layoutId);
         TextInputLayout nameInputLayout = findViewById(R.id.layoutName);
         TextInputLayout apellidoInputLayout = findViewById(R.id.layoutApellido);
+        TextInputLayout cedulaInputLayout = findViewById(R.id.layoutCedula);
+        TextInputLayout phoneInputLayout = findViewById(R.id.layouttelefono);
+        TextInputLayout direccionInputLayout = findViewById(R.id.layoutDireccion);
 
         String idString = idInputLayout.getEditText().getText().toString().trim();
         String name = nameInputLayout.getEditText().getText().toString().trim();
         String apellidos = apellidoInputLayout.getEditText().getText().toString().trim();
+        String cedulaString = cedulaInputLayout.getEditText().getText().toString().trim();
+        String direccion = direccionInputLayout.getEditText().getText().toString().trim();
+        String phonee= phoneInputLayout.getEditText().getText().toString().trim();
 
-        if (!TextUtils.isEmpty(idString) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos)) {
+        if (!TextUtils.isEmpty(idString) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos) && !TextUtils.isEmpty(cedulaString)) {
             int id = Integer.parseInt(idString);
+
             boolean success = deleteData(id);
             if (success) {
                 Toast.makeText(ConsultarUsuario.this, "Datos eliminados correctamente", Toast.LENGTH_SHORT).show();
@@ -283,6 +259,9 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
                 idInputLayout.getEditText().setText("");
                 nameInputLayout.getEditText().setText("");
                 apellidoInputLayout.getEditText().setText("");
+                cedulaInputLayout.getEditText().setText("");
+                direccionInputLayout.getEditText().setText("");
+                phoneInputLayout.getEditText().setText("");
             } else {
                 Toast.makeText(ConsultarUsuario.this, "Error al eliminar los datos", Toast.LENGTH_SHORT).show();
             }
@@ -306,39 +285,5 @@ public class ConsultarUsuario extends AppCompatActivity implements DatePickerDia
     public void Salir(View v) {
         Intent call_Registro = new Intent(v.getContext(), Registro.class);
         startActivity(call_Registro);
-    }
+    }*/
 }
-
-
-   /* @SuppressLint("Range")
-    public void buscarUsuario(View v) {
-
-        MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
-        final SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        if (db != null) {
-            TextInputLayout layoutId = findViewById(R.id.layoutId);
-            TextInputEditText txt_id = findViewById(R.id.txt_id);
-            TextInputLayout layoutName = findViewById(R.id.layoutName);
-            TextInputEditText txt_name = findViewById(R.id.txt_name);
-            TextInputLayout layoutApellido = findViewById(R.id.layoutApellido);
-            TextInputEditText txt_apellido = findViewById(R.id.txt_apellidos);
-            TextInputLayout layoutCedula = findViewById(R.id.layoutCedula);
-            TextInputEditText txt_cedulas = findViewById(R.id.txtcedula);
-            TextInputLayout layoutPhone = findViewById(R.id.layouttelefono);
-            TextInputEditText txt_phone = findViewById(R.id.txt_Phone);
-
-            String name = layoutName.getEditText().getText().toString().trim();
-            String apellidos = layoutApellido.getEditText().getText().toString().trim();
-
-            int identificador = Integer.parseInt(layoutId.getEditText().toString());
-            Cursor c= db.rawQuery("SELECT _id, name, apellidos FROM usuario WHERE _id="+identificador);
-            //Cursor c1 = db.rawQuery("SELECT _id, name, apellidos FROM usuario WHERE _id="+identificador);
-            if (c != null){
-                c.moveToFirst();
-                txt_name.setText(c.getString(c.getColumnIndex("nombres")).toString());
-                txt_name.setText(c.getString(c.getColumnIndex("apellidos")).toString());
-            }
-            c.close();
-            db.close();
-        }*/
-

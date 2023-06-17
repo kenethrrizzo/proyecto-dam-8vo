@@ -22,35 +22,22 @@ import java.util.Calendar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Registro extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class Registro extends AppCompatActivity{
 
-    private String nSpinnerNacionalidad = "";
-    private String nSpinnerGenero = "";
-    EditText txt_Fecha;
+    private String nSpinnerGenero ="";
+    private String nSpinnerProvincia= "";
+    private String nSpinnerCiudad = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-
-        Spinner spinner = findViewById(R.id.sp_nacionalidad);
-        Spinner spinner2 = findViewById(R.id.sp_genero);
-        Spinner spinner3 = findViewById(R.id.sp_provincia);
-        Spinner spinner4 = findViewById(R.id.sp_ciudad);
-
-        txt_Fecha = findViewById(R.id.txt_fecha);
-        ImageButton button = findViewById(R.id.btn_Fecha);
-        button.setOnClickListener(v -> {
-            DatePickerFragment datePickerFragment = new DatePickerFragment();
-            datePickerFragment.show(getSupportFragmentManager(), "datePicker");
-        });
-
+        Spinner spinner2 = (Spinner) findViewById(R.id.sp_genero);
+        Spinner spinner3 = (Spinner) findViewById(R.id.sp_provincia);
+        Spinner spinner4 = (Spinner) findViewById(R.id.sp_ciudad);
 
         //Create ArrayAdapter
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.nacionalidad,
-                android.R.layout.simple_spinner_item);
-
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.genero,
                 android.R.layout.simple_spinner_item);
 
@@ -61,32 +48,16 @@ public class Registro extends AppCompatActivity implements DatePickerDialog.OnDa
                 android.R.layout.simple_spinner_item);
 
         // especifico el diseño que se utilizara cuando aparezca la lista de opciones
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
         //Aplicar el adaptador al spinner
-        spinner.setAdapter(adapter);
         spinner2.setAdapter(adapter2);
         spinner3.setAdapter(adapter3);
         spinner4.setAdapter(adapter4);
 
         //Controlar acciones del spinner
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerNacionalidad = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerNacionalidad, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -103,8 +74,8 @@ public class Registro extends AppCompatActivity implements DatePickerDialog.OnDa
         spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerNacionalidad = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerNacionalidad, Toast.LENGTH_SHORT).show();
+                nSpinnerProvincia = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerProvincia, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -116,8 +87,8 @@ public class Registro extends AppCompatActivity implements DatePickerDialog.OnDa
         spinner4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerNacionalidad = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerNacionalidad, Toast.LENGTH_SHORT).show();
+                nSpinnerCiudad= parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerCiudad, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -128,61 +99,44 @@ public class Registro extends AppCompatActivity implements DatePickerDialog.OnDa
 
     }
 
-
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        Integer id = view.getId();
-        if (id.equals(R.id.rbd_casado)) {
-            if (checked) {
-                Toast.makeText(getApplicationContext(), "Seleccionaste Casado", Toast.LENGTH_SHORT).show();
-            }
-        } else if (id.equals(R.id.rbd_soltero)) {
-            if (checked) {
-                Toast.makeText(getApplicationContext(), "Seleccionaste Soltero", Toast.LENGTH_SHORT).show();
-            }
-        } else if (id.equals(R.id.rbd_divorciado)) {
-            if (checked) {
-                Toast.makeText(getApplicationContext(), "Seleccionaste Divorciado", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        txt_Fecha.setText(currentDateString);
-    }
-
-
-    // Pasa el contexto actual
-    MyOpenHelper databaseHelper = new MyOpenHelper(this);
-
+    MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
     public void registrarUsuario(View v) {
         TextInputLayout layoutName = findViewById(R.id.layoutName);
-        TextInputEditText txt_name = findViewById(R.id.txt_name);
         TextInputLayout layoutApellido = findViewById(R.id.layoutApellido);
-        TextInputEditText txt_apellido = findViewById(R.id.txt_apellidos);
         TextInputLayout layoutCedula = findViewById(R.id.layoutCedula);
-        TextInputEditText txt_cedulas = findViewById(R.id.txtcedula);
         TextInputLayout layoutPhone = findViewById(R.id.layouttelefono);
-        TextInputEditText txt_phone = findViewById(R.id.txt_Phone);
+        TextInputLayout layoutDireccion = findViewById(R.id.layoutDireccion);
+        TextInputLayout layoutPassword= findViewById(R.id.layoutpassword);
+
+        Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
+        Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
+        Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
 
         String name = layoutName.getEditText().getText().toString().trim();
         String apellidos = layoutApellido.getEditText().getText().toString().trim();
-        //String phone = layouttelefono.getEditText().getText().toString().trim();
+        String cedulaString = layoutCedula.getEditText().getText().toString().trim();
+        String phones = layoutPhone.getEditText().getText().toString().trim();
+        String direccion = layoutDireccion.getEditText().getText().toString().trim();
+        String password = layoutPassword.getEditText().getText().toString().trim();
+        String genero = nSpinnerGenero.getSelectedItem().toString();
+        String provincia = nSpinnerProvincia.getSelectedItem().toString();
+        String ciudad = nSpinnerCiudad.getSelectedItem().toString();
 
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos)) {
-            boolean success = databaseHelper.insertData(name, apellidos);
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos) && !TextUtils.isEmpty(cedulaString)) {
+            int cedula = Integer.parseInt(cedulaString);
+            int phone = Integer.parseInt(phones);
+
+            boolean success = databaseHelper.insertData(name, apellidos, cedula, genero, phone, direccion, provincia, ciudad,password);
             if (success) {
                 Toast.makeText(Registro.this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
                 // Limpiar los campos después de guardar los datos
                 layoutName.getEditText().setText("");
                 layoutApellido.getEditText().setText("");
+                layoutCedula.getEditText().setText("");
+                layoutPhone.getEditText().setText("");
+                layoutDireccion.getEditText().setText("");
+                layoutPassword.getEditText().setText("");
+
             } else {
                 Toast.makeText(Registro.this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
             }
@@ -191,13 +145,13 @@ public class Registro extends AppCompatActivity implements DatePickerDialog.OnDa
         }
     }
 
-
-    public void Regresar(View v) {
+    public void Regresar(View v){
         Intent call_principal = new Intent(v.getContext(), Login.class);
         startActivity(call_principal);
     }
 
-    public void Consultar(View v) {
+    public void Consultar(View v)
+    {
         Intent call_consultar_usuario = new Intent(v.getContext(), ConsultarUsuario.class);
         startActivity(call_consultar_usuario);
     }
