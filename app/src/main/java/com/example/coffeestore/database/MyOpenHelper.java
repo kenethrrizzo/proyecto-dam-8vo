@@ -9,7 +9,7 @@ import com.example.coffeestore.dto.Usuario;
 
 public class MyOpenHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "CoffeeStore";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String TABLE_USUARIO = "user";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NOMBRES = "nombres";
