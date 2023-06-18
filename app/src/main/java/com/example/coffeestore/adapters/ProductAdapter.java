@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     private final List<Producto> productList;
     public final Context context;
+    private OnItemClickListener clickListener;
+
 
     public ProductAdapter(List<Producto> productList, Context context) {
         this.productList = productList;
@@ -44,7 +47,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.textProductPrice.setText("Price: $" + product.getPrecio());
 
         Picasso.get().load(product.getUrlImagen()).into(holder.imageProduct);
+
+        ImageButton buttonIcon = holder.itemView.findViewById(R.id.button_icon);
+        buttonIcon.setOnClickListener(v -> {
+            if (clickListener != null) {
+                clickListener.onItemClick(position);
+            }
+        });
     }
+
+    private void guardarEnSharedPreferences() {
+        System.out.println("GUARDADOOOOOOO");
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.clickListener = listener;
+    }
+
+
 
     @Override
     public int getItemCount() {
