@@ -2,6 +2,7 @@ package com.example.coffeestore.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -71,22 +72,20 @@ public class MyOpenHelper extends SQLiteOpenHelper{
         return resultado != -1;
 
     }
-    /*public long insertarUsuario(Usuario usuario) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NOMBRES, usuario.getNombres());
-        values.put(COLUMN_APELLIDOS, usuario.getApellidos());
-        values.put(COLUMN_CEDULA, usuario.getCedula());
-        values.put(COLUMN_GENERO, usuario.getGenero());
-        values.put(COLUMN_NUMERO_TELEFONICO, usuario.getNumeroTelefonico());
-        values.put(COLUMN_DIRECCION, usuario.getDireccion());
-        values.put(COLUMN_PROVINCIA, usuario.getProvincia());
-        values.put(COLUMN_CIUDAD, usuario.getCiudad());
-        values.put(COLUMN_PASSWORD, usuario.getPassword());
+    public boolean validarCredenciales(String nombreUsuario, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        long resultado = db.insert(TABLE_USUARIO, null, values);
+        String selection = COLUMN_NOMBRES + " = ? AND " + COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = {nombreUsuario, password};
+
+        Cursor cursor = db.query(TABLE_USUARIO, null, selection, selectionArgs, null, null, null);
+
+        boolean loginExitoso = cursor.getCount() > 0;
+
+        cursor.close();
         db.close();
-        return resultado;
-    }*/
+
+        return loginExitoso;
+    }
 }

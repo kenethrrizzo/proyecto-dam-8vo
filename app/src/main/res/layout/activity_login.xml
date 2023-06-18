@@ -64,7 +64,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutcontraseña"
+                android:id="@+id/layoutcontrasena"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Contraseña"
@@ -78,7 +78,7 @@
                 app:startIconTint="#0288D1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_contraseña"
+                    android:id="@+id/txt_contrasena"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text|textPassword" />
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#0288D1"
-                android:onClick="ValidarIngreso"
+                android:onClick="Ingresar"
                 android:text="Aceptar" />
 
             <Button
