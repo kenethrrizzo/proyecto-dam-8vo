@@ -1,19 +1,18 @@
 package com.example.coffeestore.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.coffeestore.R;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.coffeestore.adapters.ProductAdapter;
 import com.example.coffeestore.database.ProductDbHelper;
@@ -24,7 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityProductos extends AppCompatActivity {
+public class ActivityProductos extends AppCompatActivity implements ProductAdapter.OnItemClickListener {
 
     private List<Producto> productos;
     private RecyclerView recyclerView;
@@ -45,6 +44,7 @@ public class ActivityProductos extends AppCompatActivity {
         }
 
         ProductAdapter productAdapter = new ProductAdapter(productos, this);
+        productAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(productAdapter);
 
         TextInputEditText txtUsuario = findViewById(R.id.txt_productsearch);
@@ -79,9 +79,7 @@ public class ActivityProductos extends AppCompatActivity {
             PopupMenu popupMenu = new PopupMenu(ActivityProductos.this, v);
             popupMenu.inflate(R.menu.menu_filter);
 
-            // Establecer listener para manejar las selecciones del menú emergente
             popupMenu.setOnMenuItemClickListener(item -> {
-                // Aquí puedes obtener el ID del elemento seleccionado y realizar las acciones necesarias
                 int itemId = item.getItemId();
                 if (itemId == R.id.filter_bebida_caliente) {
                     ProductAdapter productAdapter1 = new ProductAdapter(
@@ -112,7 +110,28 @@ public class ActivityProductos extends AppCompatActivity {
                 return true;
             });
 
-            // Mostrar el menú emergente
+            popupMenu.show();
+        });
+
+        ImageButton buttonMenuPrincipal = findViewById(R.id.button_main_menu);
+        buttonMenuPrincipal.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(ActivityProductos.this, v);
+            popupMenu.inflate(R.menu.menu_datos);
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.menu_ver_perfil) {
+                    Intent intent = new Intent(this, ActivityConsultarUsuario.class);
+                    startActivity(intent);
+                    return true;
+                } else if (itemId == R.id.menu_carrito_compras) {
+                    Intent intent = new Intent(this, ActivityCarritoDeCompras.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return true;
+            });
+
             popupMenu.show();
         });
     }
@@ -128,29 +147,8 @@ public class ActivityProductos extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_datos, menu);
-        return true;
+    public void onItemClick(int position) {
+        Toast.makeText(this, "Se hizo clic en el botón en la posición: " + position, Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.menu_ver_perfil) {
-            Intent intent = new Intent(this, ActivityConsultarUsuario.class);
-            startActivity(intent);
-            return true;
-        }else if (id == R.id.menu_carrito_compras) {
-            Intent intent = new Intent(this, ActivityProductos.class);
-            startActivity(intent);
-            return super.onOptionsItemSelected(item);
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
 
 }
