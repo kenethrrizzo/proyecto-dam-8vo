@@ -84,7 +84,6 @@ public class MyOpenHelper extends SQLiteOpenHelper{
         boolean loginExitoso = cursor.getCount() > 0;
 
         cursor.close();
-        db.close();
 
         return loginExitoso;
     }
