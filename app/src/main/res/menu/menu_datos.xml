@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/baseline_menu_24"
+        android:title="TODO"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menu_ver_perfil"
+                android:title="Ver Perfil" />
+            <item
+                android:id="@+id/menu_carrito_compras"
+                android:title="Carrito" />
+        </menu>
+    </item>
+
+</menu>

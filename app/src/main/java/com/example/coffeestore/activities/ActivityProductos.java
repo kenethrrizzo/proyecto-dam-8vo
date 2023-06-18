@@ -1,16 +1,20 @@
 package com.example.coffeestore.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.coffeestore.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
-import com.example.coffeestore.R;
 import com.example.coffeestore.adapters.ProductAdapter;
 import com.example.coffeestore.database.ProductDbHelper;
 import com.example.coffeestore.dto.CategoriaProducto;
@@ -122,4 +126,31 @@ public class ActivityProductos extends AppCompatActivity {
         }
         return productosFiltrados;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_datos, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_ver_perfil) {
+            Intent intent = new Intent(this, ActivityConsultarUsuario.class);
+            startActivity(intent);
+            return true;
+        }else if (id == R.id.menu_carrito_compras) {
+            Intent intent = new Intent(this, ActivityProductos.class);
+            startActivity(intent);
+            return super.onOptionsItemSelected(item);
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 }

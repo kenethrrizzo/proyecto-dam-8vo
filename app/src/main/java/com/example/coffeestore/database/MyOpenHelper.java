@@ -2,24 +2,24 @@ package com.example.coffeestore.database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.coffeestore.dto.Usuario;
 
 public class MyOpenHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "CoffeeStore";
     public static final int DATABASE_VERSION = 3;
-    public static final String TABLE_NAME = "User";
+    public static final String TABLE_USUARIO = "user";
     public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_APELLIDO = "apellidos";
+    public static final String COLUMN_NOMBRES = "nombres";
+    public static final String COLUMN_APELLIDOS = "apellidos";
     public static final String COLUMN_CEDULA= "cedula";
-    public static final String COLUMN_PHONE = "phone";
     public static final String COLUMN_GENERO = "genero";
+    public static final String COLUMN_NUMERO_TELEFONICO  = "numero_telefonico";
+    public static final String COLUMN_DIRECCION= "direccion";
     public static final String COLUMN_PROVINCIA = "provincia";
     public static final String COLUMN_CIUDAD = "ciudad";
-    public static final String COLUMN_DIRECCION= "direccion";
-
     private static final String COLUMN_PASSWORD = "password";
 
     public MyOpenHelper(Context context) {
@@ -30,14 +30,13 @@ public class MyOpenHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
 
         //db.execSQL(COMMENTS_TABLE_CREATE);
-        String createTableQuery = "CREATE TABLE " + TABLE_NAME + "("
+        String createTableQuery = "CREATE TABLE " + TABLE_USUARIO + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_NAME + " TEXT, "
-                + COLUMN_APELLIDO + " TEXT, "
+                + COLUMN_NOMBRES + " TEXT, "
+                + COLUMN_APELLIDOS + " TEXT, "
                 + COLUMN_CEDULA + " TEXT, "
                 + COLUMN_GENERO + " TEXT, "
-                //  + COLUMN_FECHA + " TEXT, "
-                + COLUMN_PHONE + " TEXT, "
+                + COLUMN_NUMERO_TELEFONICO  + " TEXT, "
                 + COLUMN_DIRECCION + " TEXT, "
                 + COLUMN_PROVINCIA + " TEXT, "
                 + COLUMN_CIUDAD + " TEXT, "
@@ -48,28 +47,46 @@ public class MyOpenHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        String dropTableQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        String dropTableQuery = "DROP TABLE IF EXISTS " + TABLE_USUARIO;
         db.execSQL(dropTableQuery);
         onCreate(db);
     }
 
-
-    public boolean insertData(String name, String apellidos, int cedula, String genero, int phone, String direccion, String provincia, String ciudad, String password) {
+    public boolean insertData(Usuario usuario) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_NAME, name);
-        contentValues.put(COLUMN_APELLIDO, apellidos);
-        contentValues.put(COLUMN_CEDULA, cedula);
-        contentValues.put(COLUMN_GENERO, genero);
-        contentValues.put(COLUMN_PHONE, phone);
-        contentValues.put(COLUMN_DIRECCION, direccion);
-        contentValues.put(COLUMN_PROVINCIA, provincia);
-        contentValues.put(COLUMN_CIUDAD, ciudad);
-        contentValues.put(COLUMN_PASSWORD, password);
 
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOMBRES, usuario.getNombres());
+        values.put(COLUMN_APELLIDOS, usuario.getApellidos());
+        values.put(COLUMN_CEDULA, usuario.getCedula());
+        values.put(COLUMN_GENERO, usuario.getGenero());
+        values.put(COLUMN_NUMERO_TELEFONICO, usuario.getNumeroTelefonico());
+        values.put(COLUMN_DIRECCION, usuario.getDireccion());
+        values.put(COLUMN_PROVINCIA, usuario.getProvincia());
+        values.put(COLUMN_CIUDAD, usuario.getCiudad());
+        values.put(COLUMN_PASSWORD, usuario.getPassword());
 
-        long result = db.insert(TABLE_NAME, null, contentValues);
+        long resultado = db.insert(TABLE_USUARIO, null, values);
 
-        return result != -1;
+        return resultado != -1;
+
     }
+    /*public long insertarUsuario(Usuario usuario) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOMBRES, usuario.getNombres());
+        values.put(COLUMN_APELLIDOS, usuario.getApellidos());
+        values.put(COLUMN_CEDULA, usuario.getCedula());
+        values.put(COLUMN_GENERO, usuario.getGenero());
+        values.put(COLUMN_NUMERO_TELEFONICO, usuario.getNumeroTelefonico());
+        values.put(COLUMN_DIRECCION, usuario.getDireccion());
+        values.put(COLUMN_PROVINCIA, usuario.getProvincia());
+        values.put(COLUMN_CIUDAD, usuario.getCiudad());
+        values.put(COLUMN_PASSWORD, usuario.getPassword());
+
+        long resultado = db.insert(TABLE_USUARIO, null, values);
+        db.close();
+        return resultado;
+    }*/
 }

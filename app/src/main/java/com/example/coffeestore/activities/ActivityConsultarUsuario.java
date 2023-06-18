@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.example.coffeestore.R;
 
+
 public class ActivityConsultarUsuario extends AppCompatActivity  {
 
     private String nSpinnerGenero = "";

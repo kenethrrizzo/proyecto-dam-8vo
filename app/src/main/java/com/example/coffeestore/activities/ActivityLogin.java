@@ -26,10 +26,13 @@ public class ActivityLogin extends AppCompatActivity {
 
     }
     public void Cancelar (View v) {
-        finishAffinity();
+        Intent call_principal = new Intent(v.getContext(), ActivityProductos.class);
+        startActivity(call_principal);
+
+        //finishAffinity();
     }
     public void CrearCuenta (View v){
-        Intent call_principal = new Intent(v.getContext(), ActivityProductos.class);
+        Intent call_principal = new Intent(v.getContext(), ActivityRegistro.class);
         startActivity(call_principal);
     }
 }
