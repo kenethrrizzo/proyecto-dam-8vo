@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header_carrito_de_compras"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1976D2"
+        android:backgroundTint="#1976D2"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/txt_formulario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#1976D2"
+            android:fontFamily="@font/meditative"
+            android:text="Pago"
+            android:textColor="#ffff"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutcreditnumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Número de tarjeta"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:endIconMode="clear_text"
+                app:endIconTint="#0288D1"
+                app:hintTextColor="#918F8F"
+                app:startIconDrawable="@drawable/baseline_add_card_24"
+                app:startIconTint="#0288D1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_creditnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutexpirationdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Fecha de expiración"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:counterMaxLength="15"
+                app:endIconTint="#0288D1"
+                app:startIconDrawable="@drawable/baseline_date_range_24"
+                app:startIconTint="#0288D1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_expiration_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutcvv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="CVV"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:counterMaxLength="15"
+                app:endIconTint="#0288D1"
+                app:startIconDrawable="@drawable/baseline_lock_24"
+                app:startIconTint="#0288D1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_cvv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_aceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="#0288D1"
+            android:onClick="confirmarCompra"
+            android:text="Confirmar compra" />
+
+        <Button
+            android:id="@+id/btn_Cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="#0288D1"
+            android:onClick="volverACarrito"
+            android:text="Volver al carrito" />
+    </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

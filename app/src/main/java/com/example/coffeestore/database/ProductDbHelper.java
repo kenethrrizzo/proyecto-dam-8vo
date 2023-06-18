@@ -192,4 +192,29 @@ public class ProductDbHelper extends SQLiteOpenHelper {
         return productos;
     }
 
+    public Producto obtenerProductoPorId(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_PRODUCTOS + " WHERE " + COLUMN_ID + " = " + id;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        Producto producto = null;
+
+        if (cursor.moveToFirst()) {
+            @SuppressLint("Range") String titulo = cursor.getString(cursor.getColumnIndex(COLUMN_TITULO));
+            @SuppressLint("Range") String descripcion = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPCION));
+            @SuppressLint("Range") double precio = cursor.getDouble(cursor.getColumnIndex(COLUMN_PRECIO));
+            @SuppressLint("Range") String urlImagen = cursor.getString(cursor.getColumnIndex(COLUMN_URL_IMAGEN));
+            @SuppressLint("Range") String categoriaString = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORIA));
+            CategoriaProducto categoria = CategoriaProducto.valueOf(categoriaString);
+
+            producto = new Producto(titulo, descripcion, precio, urlImagen, categoria);
+            producto.setId(id);
+        }
+
+        cursor.close();
+
+        return producto;
+    }
+
+
 }

@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffeestore.R;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +24,9 @@ import com.example.coffeestore.dto.Producto;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ActivityProductos extends AppCompatActivity implements ProductAdapter.OnItemClickListener {
 
@@ -48,7 +53,6 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
         recyclerView.setAdapter(productAdapter);
 
         TextInputEditText txtUsuario = findViewById(R.id.txt_productsearch);
-
         txtUsuario.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -146,9 +150,23 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
         return productosFiltrados;
     }
 
+    @SuppressLint("MutatingSharedPrefs")
     @Override
-    public void onItemClick(int position) {
-        Toast.makeText(this, "Se hizo clic en el botón en la posición: " + position, Toast.LENGTH_SHORT).show();
+    public void onItemClick(int productoId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("CarritoDeCompras", Context.MODE_PRIVATE);
+
+        Set<String> productosIds = sharedPreferences.getStringSet("productos", new HashSet<>());
+        if (productosIds.contains("0")) {
+            productosIds.clear();
+        }
+
+        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
+        productosIds.add(String.valueOf(productoId));
+        editor.putStringSet("productos", productosIds);
+
+        Toast.makeText(this, "Se agregó producto al carrito", Toast.LENGTH_SHORT).show();
+
+        editor.apply();
     }
 
 }

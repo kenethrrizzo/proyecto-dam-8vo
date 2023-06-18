@@ -51,24 +51,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         ImageButton buttonIcon = holder.itemView.findViewById(R.id.button_icon);
         buttonIcon.setOnClickListener(v -> {
             if (clickListener != null) {
-                clickListener.onItemClick(position);
+                clickListener.onItemClick(product.getId());
             }
         });
     }
 
-    private void guardarEnSharedPreferences() {
-        System.out.println("GUARDADOOOOOOO");
-    }
-
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(int productId);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.clickListener = listener;
     }
-
-
 
     @Override
     public int getItemCount() {

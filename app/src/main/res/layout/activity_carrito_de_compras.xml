@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/header_carrito_de_compras"
@@ -14,17 +15,74 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/txt_formulario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="#1976D2"
-                android:fontFamily="@font/meditative"
-                android:text="Carrito de compras"
-                android:textColor="#ffff"
-                android:textSize="30sp" />
+        <TextView
+            android:id="@+id/txt_formulario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#1976D2"
+            android:fontFamily="@font/meditative"
+            android:text="Carrito de compras"
+            android:textColor="#ffff"
+            android:textSize="30sp" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/productos_en_carrito"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_carrito_de_compras"
+        tools:ignore="MissingConstraints">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_products_in_cart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            tools:listitem="@layout/item_product_in_shopping_cart" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productos_en_carrito"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/btn_volver_a_pantalla_principal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:backgroundTint="#0288D1"
+            android:onClick="regresar"
+            android:text="Regresar" />
+
+        <Button
+            android:id="@+id/btn_comprar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:backgroundTint="#0288D1"
+            android:onClick="comprar"
+            android:text="Comprar" />
+
+        <TextView
+            android:id="@+id/text_product_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Precio total: $0"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

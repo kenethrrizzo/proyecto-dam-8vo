@@ -25,6 +25,9 @@
             android:name=".activities.ActivityRegistro"
             android:exported="false" />
         <activity
+            android:name=".activities.ActivityPago"
+            android:exported="false" />
+        <activity
             android:name=".activities.ActivityLogin"
             android:exported="true">
             <intent-filter>
