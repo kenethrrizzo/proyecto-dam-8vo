@@ -292,14 +292,6 @@
                 android:onClick="Regresar"
                 android:text="Cancelar" />
 
-            <Button
-                android:id="@+id/btn_eliminar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="#0288D1"
-                android:onClick="Consultar"
-                android:text="Consultar" />
         </LinearLayout>
 
     </LinearLayout>

@@ -14,6 +14,7 @@ import com.example.coffeestore.database.CompraDbHelper;
 import com.example.coffeestore.database.ProductDbHelper;
 import com.example.coffeestore.dto.ProductoEnCarrito;
 import com.example.coffeestore.dto.Tarjeta;
+import com.example.coffeestore.dto.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
@@ -35,7 +36,9 @@ public class ActivityPago extends AppCompatActivity {
         TextInputLayout layoutNumero = findViewById(R.id.layoutcreditnumber);
         TextInputLayout layoutExpDate = findViewById(R.id.layoutexpirationdate);
         TextInputLayout layoutCvv = findViewById(R.id.layoutcvv);
+
         Tarjeta tarjeta = new Tarjeta();
+        Usuario usuario = new Usuario();
         tarjeta.setNumero(Objects.requireNonNull(layoutNumero.getEditText()).getText().toString().trim());
         tarjeta.setFechaDeExpiracion(Objects.requireNonNull(layoutExpDate.getEditText()).getText().toString().trim());
         tarjeta.setCvv(Objects.requireNonNull(layoutCvv.getEditText()).getText().toString().trim());

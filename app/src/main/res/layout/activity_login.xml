@@ -107,15 +107,6 @@
                 android:text="Aceptar" />
 
             <Button
-                android:id="@+id/btn_Cancelar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="#0288D1"
-                android:onClick="Cancelar"
-                android:text="Cancelar" />
-
-            <Button
                 android:id="@+id/btn_nuevoUsuaio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,6 +114,15 @@
                 android:backgroundTint="#0288D1"
                 android:onClick="CrearCuenta"
                 android:text="Crear Cuenta" />
+
+            <Button
+                android:id="@+id/btn_Cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#0288D1"
+                android:onClick="Cancelar"
+                android:text="Cancelar" />
 
         </LinearLayout>
 

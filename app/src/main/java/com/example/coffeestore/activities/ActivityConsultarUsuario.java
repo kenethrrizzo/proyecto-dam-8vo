@@ -2,6 +2,8 @@ package com.example.coffeestore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -11,18 +13,52 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.coffeestore.R;
+import com.example.coffeestore.database.UsuarioHelper;
+import com.example.coffeestore.dto.Usuario;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 
-public class ActivityConsultarUsuario extends AppCompatActivity  {
+public class ActivityConsultarUsuario extends AppCompatActivity {
 
     private String nSpinnerGenero = "";
-    private String nSpinnerProvincia= "";
+    private String nSpinnerProvincia = "";
     private String nSpinnerCiudad = "";
+    private Usuario usuario;
+    private TextInputLayout layoutNombres, layoutApellido, layoutCedula, layoutPhone, layoutDireccion;
 
-    @Override
+    //@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_usuario);
+
+        layoutNombres = findViewById(R.id.layoutName);
+        TextInputEditText txt_nombres = findViewById(R.id.txt_name);
+        layoutApellido = findViewById(R.id.layoutApellido);
+        TextInputEditText txt_apellidos = findViewById(R.id.txt_apellidos);
+        layoutCedula = findViewById(R.id.layoutCedula);
+        TextInputEditText txt_cedula = findViewById(R.id.txtcedula);
+        layoutPhone = findViewById(R.id.layouttelefono);
+        TextInputEditText txt_numeroTelefonico = findViewById(R.id.txt_Phone);
+        layoutDireccion = findViewById(R.id.layoutDireccion);
+        TextInputEditText txt_direccion = findViewById(R.id.txt_direccion);
+        Spinner ciudad = findViewById(R.id.sp_ciudad);
+
+        Usuario usuario;
+        try (UsuarioHelper helper = new UsuarioHelper(this)) {
+            SharedPreferences sharedPreferences = getSharedPreferences("usuarioId", Context.MODE_PRIVATE);
+            String usuarioId = sharedPreferences.getString("id", "0");
+
+            usuario = helper.getUsuarioPorId(Integer.valueOf(usuarioId));
+
+        }
+
+        txt_nombres.setText(usuario.getNombres());
+        txt_apellidos.setText(usuario.getApellidos());
+        txt_cedula.setText(usuario.getCedula());
+        txt_numeroTelefonico.setText(usuario.getNumeroTelefonico());
+        txt_direccion.setText(usuario.getDireccion());
+
 
         Spinner spinner2 = (Spinner) findViewById(R.id.sp_genero);
         Spinner spinner3 = (Spinner) findViewById(R.id.sp_provincia);
@@ -55,6 +91,7 @@ public class ActivityConsultarUsuario extends AppCompatActivity  {
                 nSpinnerGenero = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerGenero, Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -65,6 +102,7 @@ public class ActivityConsultarUsuario extends AppCompatActivity  {
                 nSpinnerProvincia = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerProvincia, Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -83,78 +121,64 @@ public class ActivityConsultarUsuario extends AppCompatActivity  {
             }
         });
 
-    }
 
-   /* public void buscarUsuario(View v) {
-        TextInputLayout idInputLayout = findViewById(R.id.layoutId);
-        String idString = idInputLayout.getEditText().getText().toString().trim();
-
-        if (!TextUtils.isEmpty(idString)) {
-            int id = Integer.parseInt(idString);
-            searchDataById(id);
-        } else {
-            Toast.makeText(ConsultarUsuario.this, "Ingresa un ID válido", Toast.LENGTH_SHORT).show();
-        }
-    }
-    private void searchDataById(int id) {
-        MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-
-        String[] projection = {
-                MyOpenHelper.COLUMN_NAME,
-                MyOpenHelper.COLUMN_APELLIDO,
-                MyOpenHelper.COLUMN_CEDULA,
-                MyOpenHelper.COLUMN_GENERO,
-                MyOpenHelper.COLUMN_PHONE,
-                MyOpenHelper.COLUMN_DIRECCION,
-                MyOpenHelper.COLUMN_PROVINCIA,
-                MyOpenHelper.COLUMN_CIUDAD,
-        };
-
-        String selection = MyOpenHelper.COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-
-        Cursor cursor = db.query(
-                MyOpenHelper.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        if (cursor.moveToFirst()) {
-            @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_NAME));
-            @SuppressLint("Range") String apellidos = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_APELLIDO));
-            @SuppressLint("Range") String cedula = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_CEDULA));
-            @SuppressLint("Range") String genero = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_GENERO));
-            @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_PHONE));
-            @SuppressLint("Range") String direccion = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_DIRECCION));
-            @SuppressLint("Range") String provincia = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_PROVINCIA));
-            @SuppressLint("Range") String ciudad = cursor.getString(cursor.getColumnIndex(MyOpenHelper.COLUMN_CIUDAD));
-
-            // Aquí puedes utilizar los datos obtenidos, por ejemplo, mostrarlos en los TextInputLayout
-            TextInputLayout nameInputLayout = findViewById(R.id.layoutName);
-            TextInputLayout apellidoInputLayout = findViewById(R.id.layoutApellido);
-            TextInputLayout cedulaInputLayout = findViewById(R.id.layoutCedula);
-            TextInputLayout phoneInputLayout = findViewById(R.id.layouttelefono);
-            TextInputLayout direccionInputLayout = findViewById(R.id.layoutDireccion);
-
-            nameInputLayout.getEditText().setText(name);
-            apellidoInputLayout.getEditText().setText(apellidos);
-            cedulaInputLayout.getEditText().setText(cedula);
-            phoneInputLayout.getEditText().setText(phone);
-            direccionInputLayout.getEditText().setText(direccion);
-        } else {
-            Toast.makeText(ConsultarUsuario.this, "No se encontraron resultados", Toast.LENGTH_SHORT).show();
+        if (usuario != null) {
+            // Mostrar los datos del usuario en las TextInputLayouts correspondientes
+            layoutNombres.getEditText().setText(usuario.getNombres());
+            layoutApellido.getEditText().setText(usuario.getApellidos());
+            layoutCedula.getEditText().setText(usuario.getCedula());
+            layoutPhone.getEditText().setText(usuario.getCedula());
+            layoutDireccion.getEditText().setText(usuario.getCedula());
+            // Mostrar otros datos del usuario en las TextInputLayouts correspondientes
         }
 
-        cursor.close();
-        db.close();
     }
 
-    public void ActualizarUsuario (View v){
+    UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
+
+    public void ActualizarUsuario(View v) {
+
+        Usuario usuarioActualizado = new Usuario();
+
+        // Actualizar los datos del usuario en la base de datos
+        boolean exito = databaseHelper.actualizarUsuario(usuarioActualizado);
+
+        if (exito) {
+            Toast.makeText(this, "Usuario actualizado exitosamente", Toast.LENGTH_SHORT).show();
+            // Realizar cualquier otra acción necesaria después de la actualización
+        } else {
+            Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_SHORT).show();
+        }
+    }
+    /*private boolean updateData(Usuario usuario) {
+        UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(UsuarioHelper.COLUMN_NOMBRES, usuario.getNombres());
+        contentValues.put(UsuarioHelper.COLUMN_APELLIDOS, usuario.getApellidos());
+        contentValues.put(UsuarioHelper.COLUMN_CEDULA, usuario.getCedula());
+        contentValues.put(UsuarioHelper.COLUMN_GENERO, usuario.getGenero());
+        contentValues.put(UsuarioHelper.COLUMN_NUMERO_TELEFONICO, usuario.getNumeroTelefonico());
+        contentValues.put(UsuarioHelper.COLUMN_DIRECCION, usuario.getDireccion());
+        contentValues.put(UsuarioHelper.COLUMN_PROVINCIA, usuario.getProvincia());
+        contentValues.put(UsuarioHelper.COLUMN_CIUDAD, usuario.getCiudad());
+
+        //String selection = UsuarioHelper.COLTABLE_USUARIOUMN_ID + " = ?";
+        //String[] selectionArgs = {String.valueOf(id)};
+
+        int actualizados = db.update(TABLE_USUARIO, contentValues, null, null);
+
+        return actualizados  > 0;
+        // int rowsAffected = db.update(UsuarioHelper.TABLE_USUARIO, contentValues, selection, selectionArgs);
+
+        //  return rowsAffected > 0;
+    }*/
+
+
+
+
+    /*public void ActualizarUsuario (View v){
         TextInputLayout idInputLayout = findViewById(R.id.layoutId);
         TextInputLayout nameInputLayout = findViewById(R.id.layoutName);
         TextInputLayout apellidoInputLayout = findViewById(R.id.layoutApellido);
@@ -199,79 +223,29 @@ public class ActivityConsultarUsuario extends AppCompatActivity  {
         }
     }
     private boolean updateData(int id, String name, String apellidos,int cedula, String genero, int  phone, String direccion, String provincia, String ciudad) {
-        MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
+        UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MyOpenHelper.COLUMN_NAME, name);
-        contentValues.put(MyOpenHelper.COLUMN_APELLIDO, apellidos);
-        contentValues.put(MyOpenHelper.COLUMN_CEDULA, cedula);
-        contentValues.put(MyOpenHelper.COLUMN_GENERO, genero);
-        contentValues.put(MyOpenHelper.COLUMN_PHONE, phone);
-        contentValues.put(MyOpenHelper.COLUMN_DIRECCION, direccion);
-        contentValues.put(MyOpenHelper.COLUMN_PROVINCIA, provincia);
-        contentValues.put(MyOpenHelper.COLUMN_CIUDAD, ciudad);
+        contentValues.put(UsuarioHelper.COLUMN_NAME, name);
+        contentValues.put(UsuarioHelper.COLUMN_APELLIDO, apellidos);
+        contentValues.put(UsuarioHelper.COLUMN_CEDULA, cedula);
+        contentValues.put(UsuarioHelper.COLUMN_GENERO, genero);
+        contentValues.put(UsuarioHelper.COLUMN_PHONE, phone);
+        contentValues.put(UsuarioHelper.COLUMN_DIRECCION, direccion);
+        contentValues.put(UsuarioHelper.COLUMN_PROVINCIA, provincia);
+        contentValues.put(UsuarioHelper.COLUMN_CIUDAD, ciudad);
 
-        String selection = MyOpenHelper.COLUMN_ID + " = ?";
+        String selection = UsuarioHelper.COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(id)};
 
-        int rowsAffected = db.update(MyOpenHelper.TABLE_NAME, contentValues, selection, selectionArgs);
+        int rowsAffected = db.update(UsuarioHelper.TABLE_NAME, contentValues, selection, selectionArgs);
 
         db.close();
 
         return rowsAffected > 0;
-    }
-
-    public  void EliminarUsuario(View v){
-        TextInputLayout idInputLayout = findViewById(R.id.layoutId);
-        TextInputLayout nameInputLayout = findViewById(R.id.layoutName);
-        TextInputLayout apellidoInputLayout = findViewById(R.id.layoutApellido);
-        TextInputLayout cedulaInputLayout = findViewById(R.id.layoutCedula);
-        TextInputLayout phoneInputLayout = findViewById(R.id.layouttelefono);
-        TextInputLayout direccionInputLayout = findViewById(R.id.layoutDireccion);
-
-        String idString = idInputLayout.getEditText().getText().toString().trim();
-        String name = nameInputLayout.getEditText().getText().toString().trim();
-        String apellidos = apellidoInputLayout.getEditText().getText().toString().trim();
-        String cedulaString = cedulaInputLayout.getEditText().getText().toString().trim();
-        String direccion = direccionInputLayout.getEditText().getText().toString().trim();
-        String phonee= phoneInputLayout.getEditText().getText().toString().trim();
-
-        if (!TextUtils.isEmpty(idString) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos) && !TextUtils.isEmpty(cedulaString)) {
-            int id = Integer.parseInt(idString);
-
-            boolean success = deleteData(id);
-            if (success) {
-                Toast.makeText(ConsultarUsuario.this, "Datos eliminados correctamente", Toast.LENGTH_SHORT).show();
-                // Limpiar el campo después de eliminar los datos
-                idInputLayout.getEditText().setText("");
-                nameInputLayout.getEditText().setText("");
-                apellidoInputLayout.getEditText().setText("");
-                cedulaInputLayout.getEditText().setText("");
-                direccionInputLayout.getEditText().setText("");
-                phoneInputLayout.getEditText().setText("");
-            } else {
-                Toast.makeText(ConsultarUsuario.this, "Error al eliminar los datos", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(ConsultarUsuario.this, "Ingresa un ID válido", Toast.LENGTH_SHORT).show();
-        }
-    }
-    private boolean deleteData(int id) {
-        MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
-        String selection = MyOpenHelper.COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-
-        int rowsAffected = db.delete(MyOpenHelper.TABLE_NAME, selection, selectionArgs);
-
-        db.close();
-
-        return rowsAffected > 0;
-    }
-    public void Salir(View v) {
-        Intent call_Registro = new Intent(v.getContext(), Registro.class);
-        startActivity(call_Registro);
     }*/
+
+
+
 }

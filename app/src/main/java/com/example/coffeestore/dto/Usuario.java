@@ -5,6 +5,7 @@ import java.util.Date;
 public class Usuario {
 
     public Usuario() {}
+    private Integer id;
 
     private String nombres;
     private String apellidos;
@@ -18,20 +19,14 @@ public class Usuario {
     private String password;
 
 
-    // Constructor
-   /* public Usuario(String nombres, String apellidos, String cedula, String genero, String numeroTelefonico, String direccion, String provincia, String ciudad, String password) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.cedula = cedula;
-        this.genero = genero;
-        this.numeroTelefonico = numeroTelefonico;
-        this.direccion = direccion;
-        this.provincia = provincia;
-        this.ciudad = ciudad;
-        this.password = password;
-    }*/
-
     // Getters y Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNombres() {
         return nombres;

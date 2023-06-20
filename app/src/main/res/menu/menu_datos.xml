@@ -9,5 +9,11 @@
         android:id="@+id/menu_carrito_compras"
         android:icon="@drawable/baseline_shopping_cart_24"
         android:title="Carrito" />
+    <item
+        android:id="@+id/menu_cerrar_sesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/baseline_shopping_cart_24"
+        android:title="Cerrar sesion" />
 
 </menu>

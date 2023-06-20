@@ -132,6 +132,10 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
                     Intent intent = new Intent(this, ActivityCarritoDeCompras.class);
                     startActivity(intent);
                     return true;
+                } else if (itemId == R.id.menu_cerrar_sesion) {
+                    Intent intent = new Intent(this, ActivityLogin.class);
+                    startActivity(intent);
+                    return true;
                 }
                 return true;
             });

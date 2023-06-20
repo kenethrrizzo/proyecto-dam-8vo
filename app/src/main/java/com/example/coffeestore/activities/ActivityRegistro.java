@@ -11,7 +11,7 @@ import android.widget.Spinner;
 import android.content.Intent;
 import com.example.coffeestore.R;
 
-import com.example.coffeestore.database.MyOpenHelper;
+import com.example.coffeestore.database.UsuarioHelper;
 import com.example.coffeestore.dto.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -100,7 +100,7 @@ public class ActivityRegistro extends AppCompatActivity {
 
     }
 
-    MyOpenHelper databaseHelper = new MyOpenHelper(this); // Pasa el contexto actual
+    UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
 
     public void registrarUsuario(View v) {
         // Inicializar las vistas
@@ -137,30 +137,13 @@ public class ActivityRegistro extends AppCompatActivity {
             // Limpiar los campos después de guardar los datos
             layoutNombres.getEditText().setText("");
             layoutApellido.getEditText().setText("");
-            layoutCedula.getEditText().setText("");
             layoutPhone.getEditText().setText("");
             layoutDireccion.getEditText().setText("");
+            layoutPassword.getEditText().setText("");
         } else {
             Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-       /* boolean resultado = databaseHelper.insertData(usuario);
-
-        if (resultado != -1) {
-            Toast.makeText(this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
-            /*layoutNombres.getEditText().setText("");
-            layoutApellido.getEditText().setText("");
-            layoutCedula.getEditText().setText("");
-            layoutPhone.getEditText().setText("");
-            layoutDireccion.getEditText().setText("");
-            layoutPassword.getEditText().setText("");
-            finish();
-        } else {
-            Toast.makeText(this, "Error al registrar el usuario", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
 
     public void Regresar(View v){
