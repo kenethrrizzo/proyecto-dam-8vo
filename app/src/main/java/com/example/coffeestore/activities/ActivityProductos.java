@@ -70,6 +70,7 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
                 }
 
                 ProductAdapter productAdapter = new ProductAdapter(productosFiltrados, ActivityProductos.this);
+                productAdapter.setOnItemClickListener(ActivityProductos.this);
                 recyclerView.setAdapter(productAdapter);
             }
 
@@ -89,26 +90,31 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
                     ProductAdapter productAdapter1 = new ProductAdapter(
                             getProductosFiltradosPorCategoria(CategoriaProducto.BEBIDA_CALIENTE),
                             ActivityProductos.this);
+                    productAdapter.setOnItemClickListener(ActivityProductos.this);
                     recyclerView.setAdapter(productAdapter1);
                 } else if (itemId == R.id.filter_bebida_fria) {
                     ProductAdapter productAdapter1 = new ProductAdapter(
                             getProductosFiltradosPorCategoria(CategoriaProducto.BEBIDA_FRIA),
                             ActivityProductos.this);
+                    productAdapter.setOnItemClickListener(ActivityProductos.this);
                     recyclerView.setAdapter(productAdapter1);
                 } else if (itemId == R.id.filter_panes) {
                     ProductAdapter productAdapter1 = new ProductAdapter(
                             getProductosFiltradosPorCategoria(CategoriaProducto.PANES),
                             ActivityProductos.this);
+                    productAdapter.setOnItemClickListener(ActivityProductos.this);
                     recyclerView.setAdapter(productAdapter1);
                 } else if (itemId == R.id.filter_pasteles) {
                     ProductAdapter productAdapter1 = new ProductAdapter(
                             getProductosFiltradosPorCategoria(CategoriaProducto.PASTELES),
                             ActivityProductos.this);
+                    productAdapter.setOnItemClickListener(ActivityProductos.this);
                     recyclerView.setAdapter(productAdapter1);
                 } else {
                     ProductAdapter productAdapter1 = new ProductAdapter(
                             productos,
                             ActivityProductos.this);
+                    productAdapter.setOnItemClickListener(ActivityProductos.this);
                     recyclerView.setAdapter(productAdapter1);
                 }
                 return true;
