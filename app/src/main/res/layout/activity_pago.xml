@@ -50,6 +50,7 @@
                 android:hint="Número de tarjeta"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
+                app:counterMaxLength="18"
                 app:endIconMode="clear_text"
                 app:endIconTint="#0288D1"
                 app:hintTextColor="#918F8F"
@@ -60,17 +61,18 @@
                     android:id="@+id/txt_creditnumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="number"
+                    android:maxLength="18" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutexpirationdate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Fecha de expiración"
+                android:hint="Expiración mmAA"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:counterMaxLength="15"
+                app:counterMaxLength="4"
                 app:endIconTint="#0288D1"
                 app:startIconDrawable="@drawable/baseline_date_range_24"
                 app:startIconTint="#0288D1">
@@ -79,7 +81,8 @@
                     android:id="@+id/txt_expiration_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="number"
+                    android:maxLength="4" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -89,7 +92,7 @@
                 android:hint="CVV"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:counterMaxLength="15"
+                app:counterMaxLength="4"
                 app:endIconTint="#0288D1"
                 app:startIconDrawable="@drawable/baseline_lock_24"
                 app:startIconTint="#0288D1">
@@ -98,35 +101,37 @@
                     android:id="@+id/txt_cvv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="number"
+                    android:maxLength="4" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_aceptar"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:backgroundTint="#0288D1"
-            android:onClick="confirmarCompra"
-            android:text="Confirmar compra" />
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_Cancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:backgroundTint="#0288D1"
-            android:onClick="volverACarrito"
-            android:text="Volver al carrito" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_aceptar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:backgroundTint="#0288D1"
+                android:onClick="confirmarCompra"
+                android:text="Confirmar compra" />
+
+            <Button
+                android:id="@+id/btn_Cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:backgroundTint="#0288D1"
+                android:onClick="volverACarrito"
+                android:text="Volver al carrito" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
