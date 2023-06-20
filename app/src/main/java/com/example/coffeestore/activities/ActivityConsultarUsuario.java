@@ -2,8 +2,11 @@ package com.example.coffeestore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -121,131 +124,62 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
             }
         });
 
-
-        if (usuario != null) {
-            // Mostrar los datos del usuario en las TextInputLayouts correspondientes
-            layoutNombres.getEditText().setText(usuario.getNombres());
-            layoutApellido.getEditText().setText(usuario.getApellidos());
-            layoutCedula.getEditText().setText(usuario.getCedula());
-            layoutPhone.getEditText().setText(usuario.getCedula());
-            layoutDireccion.getEditText().setText(usuario.getCedula());
-            // Mostrar otros datos del usuario en las TextInputLayouts correspondientes
-        }
-
     }
 
     UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
 
-    public void ActualizarUsuario(View v) {
+   /* public void ActualizarUsuario(View v) {
 
-        Usuario usuarioActualizado = new Usuario();
-
-        // Actualizar los datos del usuario en la base de datos
-        boolean exito = databaseHelper.actualizarUsuario(usuarioActualizado);
-
-        if (exito) {
-            Toast.makeText(this, "Usuario actualizado exitosamente", Toast.LENGTH_SHORT).show();
-            // Realizar cualquier otra acción necesaria después de la actualización
-        } else {
-            Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_SHORT).show();
-        }
-    }
-    /*private boolean updateData(Usuario usuario) {
-        UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(UsuarioHelper.COLUMN_NOMBRES, usuario.getNombres());
-        contentValues.put(UsuarioHelper.COLUMN_APELLIDOS, usuario.getApellidos());
-        contentValues.put(UsuarioHelper.COLUMN_CEDULA, usuario.getCedula());
-        contentValues.put(UsuarioHelper.COLUMN_GENERO, usuario.getGenero());
-        contentValues.put(UsuarioHelper.COLUMN_NUMERO_TELEFONICO, usuario.getNumeroTelefonico());
-        contentValues.put(UsuarioHelper.COLUMN_DIRECCION, usuario.getDireccion());
-        contentValues.put(UsuarioHelper.COLUMN_PROVINCIA, usuario.getProvincia());
-        contentValues.put(UsuarioHelper.COLUMN_CIUDAD, usuario.getCiudad());
-
-        //String selection = UsuarioHelper.COLTABLE_USUARIOUMN_ID + " = ?";
-        //String[] selectionArgs = {String.valueOf(id)};
-
-        int actualizados = db.update(TABLE_USUARIO, contentValues, null, null);
-
-        return actualizados  > 0;
-        // int rowsAffected = db.update(UsuarioHelper.TABLE_USUARIO, contentValues, selection, selectionArgs);
-
-        //  return rowsAffected > 0;
-    }*/
-
-
-
-
-    /*public void ActualizarUsuario (View v){
-        TextInputLayout idInputLayout = findViewById(R.id.layoutId);
-        TextInputLayout nameInputLayout = findViewById(R.id.layoutName);
-        TextInputLayout apellidoInputLayout = findViewById(R.id.layoutApellido);
-        TextInputLayout cedulaInputLayout = findViewById(R.id.layoutCedula);
-        TextInputLayout phoneInputLayout = findViewById(R.id.layouttelefono);
-        TextInputLayout direccionInputLayout = findViewById(R.id.layoutDireccion);
-
+        // Inicializar las vistas
         Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
         Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
         Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
 
-        String idString = idInputLayout.getEditText().getText().toString().trim();
-        String name = nameInputLayout.getEditText().getText().toString().trim();
-        String apellidos = apellidoInputLayout.getEditText().getText().toString().trim();
-        String cedulaString = cedulaInputLayout.getEditText().getText().toString().trim();
-        String direccion = direccionInputLayout.getEditText().getText().toString().trim();
-        String phones= phoneInputLayout.getEditText().getText().toString().trim();
+        String nombres = layoutNombres.getEditText().getText().toString().trim();
+        String apellidos = layoutApellido.getEditText().getText().toString().trim();
+        String cedula = layoutCedula.getEditText().getText().toString().trim();
+        String numeroTelefonico = layoutPhone.getEditText().getText().toString().trim();
+        String direccion = layoutDireccion.getEditText().getText().toString().trim();
         String genero = nSpinnerGenero.getSelectedItem().toString();
         String provincia = nSpinnerProvincia.getSelectedItem().toString();
         String ciudad = nSpinnerCiudad.getSelectedItem().toString();
 
-        if (!TextUtils.isEmpty(idString) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(apellidos)&& !TextUtils.isEmpty(cedulaString)) {
-            int id = Integer.parseInt(idString);
-            int cedula = Integer.parseInt(cedulaString);
-            int phone = Integer.parseInt(phones);
+        // Crear un nuevo objeto Usuario
+        Usuario usuarioActualizado = new Usuario();
 
-            boolean success = updateData(id, name, apellidos, cedula,genero,phone,direccion,provincia,ciudad);
-            if (success) {
-                Toast.makeText(ConsultarUsuario.this, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
-                // Limpiar los campos después de actualizar los datos
-                idInputLayout.getEditText().setText("");
-                nameInputLayout.getEditText().setText("");
-                apellidoInputLayout.getEditText().setText("");
-                cedulaInputLayout.getEditText().setText("");
-                phoneInputLayout.getEditText().setText("");
-                direccionInputLayout.getEditText().setText("");
-            } else {
-                Toast.makeText(ConsultarUsuario.this, "Error al actualizar los datos", Toast.LENGTH_SHORT).show();
-            }
+
+        // Guardar el usuario en la base de datos
+        boolean resultados = databaseHelper.actualizarUsuario(usuarioActualizado);
+        if (resultados) {
+            Toast.makeText(this, "Usuario actualizado exitosamente", Toast.LENGTH_SHORT).show();
+            // Limpiar los campos después de guardar los datos
+
         } else {
-            Toast.makeText(ConsultarUsuario.this, "Ingresa todos los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_SHORT).show();
         }
-    }
-    private boolean updateData(int id, String name, String apellidos,int cedula, String genero, int  phone, String direccion, String provincia, String ciudad) {
-        UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(UsuarioHelper.COLUMN_NAME, name);
-        contentValues.put(UsuarioHelper.COLUMN_APELLIDO, apellidos);
-        contentValues.put(UsuarioHelper.COLUMN_CEDULA, cedula);
-        contentValues.put(UsuarioHelper.COLUMN_GENERO, genero);
-        contentValues.put(UsuarioHelper.COLUMN_PHONE, phone);
-        contentValues.put(UsuarioHelper.COLUMN_DIRECCION, direccion);
-        contentValues.put(UsuarioHelper.COLUMN_PROVINCIA, provincia);
-        contentValues.put(UsuarioHelper.COLUMN_CIUDAD, ciudad);
-
-        String selection = UsuarioHelper.COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-
-        int rowsAffected = db.update(UsuarioHelper.TABLE_NAME, contentValues, selection, selectionArgs);
-
-        db.close();
-
-        return rowsAffected > 0;
     }*/
 
+
+    public void ActualizarUsuario (View v){
+
+        // Crear un nuevo objeto Usuario
+        Usuario usuario = new Usuario();
+
+        boolean success = databaseHelper.updateData(usuario.getId());
+            if (success) {
+                Toast.makeText(this, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(this, "Error al actualizar los datos", Toast.LENGTH_SHORT).show();
+            }
+    }
+
+
+    public void CancelarRegistro(View v){
+        Intent call_principal = new Intent(v.getContext(), ActivityProductos.class);
+        startActivity(call_principal);
+    }
 
 
 }

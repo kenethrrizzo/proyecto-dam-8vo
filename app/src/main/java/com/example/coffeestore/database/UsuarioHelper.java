@@ -114,7 +114,6 @@ public class UsuarioHelper extends SQLiteOpenHelper {
             usuario.setNumeroTelefonico(cursor.getString(cursor.getColumnIndex(COLUMN_NUMERO_TELEFONICO)));
         }
 
-        System.out.println("Üsuario: " + usuario.getNombres());
 
         cursor.close();
 
@@ -132,11 +131,39 @@ public class UsuarioHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DIRECCION, usuario.getDireccion());
         values.put(COLUMN_PROVINCIA, usuario.getProvincia());
         values.put(COLUMN_CIUDAD, usuario.getCiudad());
-        values.put(COLUMN_PASSWORD, usuario.getPassword());
 
         int rowsAffected = db.update(TABLE_USUARIO, values, null, null);
 
         db.close();
+
+        return rowsAffected > 0;
+    }
+
+    public boolean updateData(Integer id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Usuario usuario = new Usuario();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_NOMBRES, usuario.getNombres());
+        contentValues.put(COLUMN_APELLIDOS, usuario.getApellidos());
+        contentValues.put(COLUMN_CEDULA, usuario.getCedula());
+        contentValues.put(COLUMN_GENERO, usuario.getGenero());
+        contentValues.put(COLUMN_NUMERO_TELEFONICO, usuario.getNumeroTelefonico());
+        contentValues.put(COLUMN_DIRECCION, usuario.getDireccion());
+        contentValues.put(COLUMN_PROVINCIA, usuario.getProvincia());
+        contentValues.put(COLUMN_CIUDAD, usuario.getCiudad());
+        contentValues.put(COLUMN_ID, usuario.getId());
+
+
+        String selection = UsuarioHelper.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+
+        int rowsAffected = db.update(UsuarioHelper.TABLE_USUARIO, contentValues, selection, selectionArgs);
+
+        db.close();
+        //eturn db.update(UsuarioHelper.TABLE_USUARIO, contentValues, selection, selectionArgs);
 
         return rowsAffected > 0;
     }

@@ -137,6 +137,7 @@ public class ActivityRegistro extends AppCompatActivity {
             // Limpiar los campos después de guardar los datos
             layoutNombres.getEditText().setText("");
             layoutApellido.getEditText().setText("");
+            layoutCedula.getEditText().setText("");
             layoutPhone.getEditText().setText("");
             layoutDireccion.getEditText().setText("");
             layoutPassword.getEditText().setText("");
@@ -151,9 +152,5 @@ public class ActivityRegistro extends AppCompatActivity {
         startActivity(call_principal);
     }
 
-    public void Consultar(View v)
-    {
-        Intent call_consultar_usuario = new Intent(v.getContext(), ActivityConsultarUsuario.class);
-        startActivity(call_consultar_usuario);
-    }
+
 }
