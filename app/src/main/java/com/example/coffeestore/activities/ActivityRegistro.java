@@ -138,8 +138,8 @@ public class ActivityRegistro extends AppCompatActivity {
             layoutPhone.getEditText().setText("");
             layoutDireccion.getEditText().setText("");
             layoutPassword.getEditText().setText("");
-            Intent call_producto = new Intent(v.getContext(), ActivityProductos.class);
-            startActivity(call_producto);
+            Intent call_principal = new Intent(v.getContext(), ActivityLogin.class);
+            startActivity(call_principal);
         } else {
             Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
         }
