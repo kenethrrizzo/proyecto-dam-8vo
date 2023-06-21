@@ -114,12 +114,8 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
             }
         });
         // Configuración del botón Actualizar
-        btnActualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actualizar();
-            }
-        });
+        btnActualizar = findViewById(R.id.btn_actualizar);
+        btnActualizar.setOnClickListener(v -> actualizar());
 
         /*// Seleccionar los valores adecuados en los spinners
         seleccionarValorSpinner(nSpinnerGenero, usuario.getGenero());
@@ -143,7 +139,7 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
         txt_cedula.setText(usuario.getCedula());
         txt_numeroTelefonico.setText(usuario.getNumeroTelefonico());
         txt_direccion.setText(usuario.getDireccion());
-        btnActualizar = findViewById(R.id.btn_actualizar);
+
 
        /* try (UsuarioHelper helper = new UsuarioHelper(this)) {
             SharedPreferences sharedPreferences = getSharedPreferences("usuarioId", Context.MODE_PRIVATE);
@@ -327,17 +323,15 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
         usuario.setProvincia(nuevaProvincia);
         usuario.setCiudad(nuevaCiudad);
 
-        // Guardar los nuevos datos del usuario en SharedPreferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nombres", nuevosNombres);
-        editor.putString("apellidos", nuevosApellidos);
-        editor.putString("cedula", nuevaCedula);
-        editor.putString("genero", nuevoGenero);
-        editor.putString("numero_telefonico", nuevoNumeroTelefonico);
-        editor.putString("direccion", nuevaDireccion);
-        editor.putString("provincia", nuevaProvincia);
-        editor.putString("ciudad", nuevaCiudad);
-        editor.apply();
+        try (UsuarioHelper helper = new UsuarioHelper(this)) {
+            SharedPreferences sharedPreferences = getSharedPreferences("usuarioId", Context.MODE_PRIVATE);
+            String usuarioId = sharedPreferences.getString("id", "0");
+            boolean isUpdated = helper.actualizarUsuarios(Integer.parseInt(usuarioId), usuario);
+            if (!isUpdated) {
+                Toast.makeText(this, "Error al actualizar usuario", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
         Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
         finish(); // Finalizar la actividad de actualización

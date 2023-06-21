@@ -106,33 +106,6 @@ public class UsuarioHelper extends SQLiteOpenHelper {
 
         Usuario usuario = new Usuario();
         if (cursor.moveToFirst()) {
-           usuario.setNombres(cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRES)));
-            usuario.setApellidos(cursor.getString(cursor.getColumnIndex(COLUMN_APELLIDOS)));
-            usuario.setCedula(cursor.getString(cursor.getColumnIndex(COLUMN_CEDULA)));
-            usuario.setCiudad(cursor.getString(cursor.getColumnIndex(COLUMN_CIUDAD)));
-            usuario.setDireccion(cursor.getString(cursor.getColumnIndex(COLUMN_DIRECCION)));
-            usuario.setGenero(cursor.getString(cursor.getColumnIndex(COLUMN_GENERO)));
-            usuario.setProvincia(cursor.getString(cursor.getColumnIndex(COLUMN_PROVINCIA)));
-            usuario.setNumeroTelefonico(cursor.getString(cursor.getColumnIndex(COLUMN_NUMERO_TELEFONICO)));
-        }
-
-
-        cursor.close();
-
-        return usuario;
-    }
-
-    @SuppressLint("Range")
-    public Usuario ActualizarUsuarioPorId(Integer id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-
-        Cursor cursor = db.query(TABLE_USUARIO, null, selection, selectionArgs, null, null, null);
-
-        Usuario usuario = new Usuario();
-        if (cursor.moveToFirst()) {
             usuario.setNombres(cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRES)));
             usuario.setApellidos(cursor.getString(cursor.getColumnIndex(COLUMN_APELLIDOS)));
             usuario.setCedula(cursor.getString(cursor.getColumnIndex(COLUMN_CEDULA)));
@@ -148,11 +121,11 @@ public class UsuarioHelper extends SQLiteOpenHelper {
 
         return usuario;
     }
-    public boolean actualizarUsuarios(Integer id) {
+
+    public boolean actualizarUsuarios(Integer id, Usuario usuario) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        Usuario usuario = new Usuario();
         values.put(COLUMN_NOMBRES, usuario.getNombres());
         values.put(COLUMN_APELLIDOS, usuario.getApellidos());
         values.put(COLUMN_CEDULA, usuario.getCedula());
@@ -169,30 +142,5 @@ public class UsuarioHelper extends SQLiteOpenHelper {
 
         return rowsAffected > 0;
     }
-
- /*   public int actualizarUsuario( Usuario usuario) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NOMBRES, usuario.getNombres());
-        values.put(COLUMN_APELLIDOS, usuario.getApellidos());
-        values.put(COLUMN_CEDULA, usuario.getCedula());
-        values.put(COLUMN_GENERO, usuario.getGenero());
-        values.put(COLUMN_NUMERO_TELEFONICO, usuario.getNumeroTelefonico());
-        values.put(COLUMN_DIRECCION, usuario.getDireccion());
-        values.put(COLUMN_PROVINCIA, usuario.getProvincia());
-        values.put(COLUMN_CIUDAD, usuario.getCiudad());
-
-        // Actualizar el registro en la tabla usuarios
-        //String selection = COLUMN_ID + " = ?";
-       // String[] selectionArgs = {String.valueOf(id)};
-
-      int rowsAffected = db.update(TABLE_USUARIO, values,  COLUMN_ID + " = ?",
-                new String[]{String.valueOf(usuario.getId())});
-
-      // int rowsAffected = db.update(TABLE_USUARIO, values, selection,selectionArgs);
-        return rowsAffected;
-    }*/
 
 }
