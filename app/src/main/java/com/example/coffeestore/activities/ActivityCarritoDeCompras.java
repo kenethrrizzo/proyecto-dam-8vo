@@ -30,6 +30,7 @@ public class ActivityCarritoDeCompras extends AppCompatActivity implements Shopp
     private RecyclerView recyclerView;
     private ShoppingCartAdapter shoppingCartAdapter;
     private TextView totalPrice;
+    private List<ProductoEnCarrito> productos;
 
     @SuppressLint({"SetTextI18n", "MutatingSharedPrefs"})
     @Override
@@ -42,7 +43,7 @@ public class ActivityCarritoDeCompras extends AppCompatActivity implements Shopp
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        List<ProductoEnCarrito> productos = new ArrayList<>();
+        productos = new ArrayList<>();
 
         SharedPreferences sharedPreferences = getSharedPreferences("CarritoDeCompras", Context.MODE_PRIVATE);
         Set<String> productosIds = sharedPreferences.getStringSet("productos", new HashSet<>());
@@ -97,6 +98,28 @@ public class ActivityCarritoDeCompras extends AppCompatActivity implements Shopp
         }
         totalPrice.setText("Precio total: $" + getTotalPrice(shoppingCartAdapter.getProductList()));
         return productoEnCarrito;
+    }
+
+    @SuppressLint({"SetTextI18n", "MutatingSharedPrefs"})
+    @Override
+    public void delete(ProductoEnCarrito productoEnCarrito) {
+        SharedPreferences sharedPreferences = getSharedPreferences("CarritoDeCompras", Context.MODE_PRIVATE);
+        Set<String> productosIds = sharedPreferences.getStringSet("productos", new HashSet<>());
+        productosIds.remove(String.valueOf(productoEnCarrito.getProducto().getId()));
+        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet("productos", productosIds);
+        editor.apply();
+
+        for (int i = 0; i < productos.size(); i++) {
+            if (productos.get(i).getProducto().getId().equals(productoEnCarrito.getProducto().getId())) {
+                productos.remove(i);
+            }
+        }
+
+        shoppingCartAdapter = new ShoppingCartAdapter(productos, this);
+        shoppingCartAdapter.setOnItemClickListener(this);
+        recyclerView.setAdapter(shoppingCartAdapter);
+        totalPrice.setText("Precio total: $" + getTotalPrice(shoppingCartAdapter.getProductList()));
     }
 
     public void regresar(View v) {

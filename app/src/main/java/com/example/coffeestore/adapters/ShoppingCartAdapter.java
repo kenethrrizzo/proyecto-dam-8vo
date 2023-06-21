@@ -63,6 +63,13 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
                     onBindViewHolder(holder, position);
                 }
             });
+
+            ImageButton buttonDelete = holder.itemView.findViewById(R.id.button_delete);
+            buttonDelete.setOnClickListener(v -> {
+                if (clickListener != null) {
+                    clickListener.delete(productoEnCarrito);
+                }
+            });
         }
     }
 
@@ -79,6 +86,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     public interface OnItemClickListener {
         ProductoEnCarrito plusClick(ProductoEnCarrito productoEnCarrito);
         ProductoEnCarrito minusClick(ProductoEnCarrito productoEnCarrito);
+        void delete(ProductoEnCarrito productoEnCarrito);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
