@@ -2,13 +2,11 @@ package com.example.coffeestore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import android.widget.AdapterView;
@@ -27,40 +25,32 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
     private String nSpinnerGenero = "";
     private String nSpinnerProvincia = "";
     private String nSpinnerCiudad = "";
-    private Usuario usuario;
     private TextInputLayout layoutNombres, layoutApellido, layoutCedula, layoutPhone, layoutDireccion;
+    TextInputEditText txt_nombres,txt_apellidos, txt_cedula,txt_numeroTelefonico, txt_direccion;
 
-    //@Override
+    private Usuario usuario;
+    private Button btnActualizar;
+    private SharedPreferences sharedPreferences;
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_usuario);
 
+        sharedPreferences = getSharedPreferences("MiSharedPreferences", MODE_PRIVATE);
+
+        // Inicialización de vistas
         layoutNombres = findViewById(R.id.layoutName);
-        TextInputEditText txt_nombres = findViewById(R.id.txt_name);
+        txt_nombres = findViewById(R.id.txt_name);
         layoutApellido = findViewById(R.id.layoutApellido);
-        TextInputEditText txt_apellidos = findViewById(R.id.txt_apellidos);
+        txt_apellidos = findViewById(R.id.txt_apellidos);
         layoutCedula = findViewById(R.id.layoutCedula);
-        TextInputEditText txt_cedula = findViewById(R.id.txtcedula);
+        txt_cedula = findViewById(R.id.txtcedula);
         layoutPhone = findViewById(R.id.layouttelefono);
-        TextInputEditText txt_numeroTelefonico = findViewById(R.id.txt_Phone);
+        txt_numeroTelefonico = findViewById(R.id.txt_Phone);
         layoutDireccion = findViewById(R.id.layoutDireccion);
-        TextInputEditText txt_direccion = findViewById(R.id.txt_direccion);
-        Spinner ciudad = findViewById(R.id.sp_ciudad);
-
-        Usuario usuario;
-        try (UsuarioHelper helper = new UsuarioHelper(this)) {
-            SharedPreferences sharedPreferences = getSharedPreferences("usuarioId", Context.MODE_PRIVATE);
-            String usuarioId = sharedPreferences.getString("id", "0");
-
-            usuario = helper.getUsuarioPorId(Integer.valueOf(usuarioId));
-
-        }
-
-        txt_nombres.setText(usuario.getNombres());
-        txt_apellidos.setText(usuario.getApellidos());
-        txt_cedula.setText(usuario.getCedula());
-        txt_numeroTelefonico.setText(usuario.getNumeroTelefonico());
-        txt_direccion.setText(usuario.getDireccion());
+        txt_direccion = findViewById(R.id.txt_direccion);
 
 
         Spinner spinner2 = (Spinner) findViewById(R.id.sp_genero);
@@ -123,63 +113,236 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
 
             }
         });
+        // Configuración del botón Actualizar
+        btnActualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actualizar();
+            }
+        });
 
-    }
+        /*// Seleccionar los valores adecuados en los spinners
+        seleccionarValorSpinner(nSpinnerGenero, usuario.getGenero());
+        seleccionarValorSpinner(nSpinnerProvincia, usuario.getProvincia());
+        seleccionarValorSpinner(nSpinnerCiudad, usuario.getCiudad());*/
+
+        //Consutar el usuario
+        try (UsuarioHelper helper = new UsuarioHelper(this)) {
+            SharedPreferences sharedPreferences = getSharedPreferences("usuarioId", Context.MODE_PRIVATE);
+            String usuarioId = sharedPreferences.getString("id", "0");
+
+            usuario = helper.getUsuarioPorId(Integer.valueOf(usuarioId));
+
+        }
+
+       /* Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
+        Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
+        Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);*/
+        txt_nombres.setText(usuario.getNombres());
+        txt_apellidos.setText(usuario.getApellidos());
+        txt_cedula.setText(usuario.getCedula());
+        txt_numeroTelefonico.setText(usuario.getNumeroTelefonico());
+        txt_direccion.setText(usuario.getDireccion());
+        btnActualizar = findViewById(R.id.btn_actualizar);
+
+       /* try (UsuarioHelper helper = new UsuarioHelper(this)) {
+            SharedPreferences sharedPreferences = getSharedPreferences("usuarioId", Context.MODE_PRIVATE);
+            String usuarioID = sharedPreferences.getString("id", "0");
+
+            usuario = helper.ActualizarUsuarioPorId(Integer.valueOf(usuarioID));
+
+        }
+
+
+            // Obtener los nuevos valores de los campos de texto
+            Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
+            Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
+            Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
+            String nuevosNombres = layoutNombres.getEditText().getText().toString().trim();
+            String nuevosApellidos = layoutApellido.getEditText().getText().toString().trim();
+            String nuevaCedula = layoutCedula.getEditText().getText().toString().trim();
+            String nuevoGenero = nSpinnerGenero.getSelectedItem().toString();
+            String nuevoNumeroTelefonico = layoutPhone.getEditText().getText().toString().trim();
+            String nuevaDireccion = layoutDireccion.getEditText().getText().toString().trim();
+            String nuevaProvincia = nSpinnerProvincia.getSelectedItem().toString();
+            String nuevaCiudad = nSpinnerCiudad.getSelectedItem().toString();
+
+        if (nuevosNombres.isEmpty() || nuevosApellidos.isEmpty() || nuevaCedula.isEmpty() ||
+                nuevoNumeroTelefonico.isEmpty() || nuevaDireccion.isEmpty() ) {
+            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Actualizar los datos del usuario
+        usuario.setNombres(nuevosNombres);
+        usuario.setApellidos(nuevosApellidos);
+        usuario.setCedula(nuevaCedula);
+        usuario.setGenero(nuevoGenero);
+        usuario.setNumeroTelefonico(nuevoNumeroTelefonico);
+        usuario.setDireccion(nuevaDireccion);
+        usuario.setProvincia(nuevaProvincia);
+        usuario.setCiudad(nuevaCiudad);
+        Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
+        finish(); // Finalizar la actividad de actualización
+        }/*
+
+
+        private void seleccionarValorSpinner (Spinner spinner, String valor){
+            ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spinner.getAdapter();
+            int position = adapter.getPosition(valor);
+            spinner.setSelection(position);*/
+            // Obtener el usuario actual de la base de datos o de la actividad anterior
+            //  usuario = obtenerUsuarioActual();
+
+            // Llenar los campos con los datos actuales del usuario
+            //llenarCamposUsuario();
+        }
+
+
+
 
     UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
 
-   /* public void ActualizarUsuario(View v) {
+  /*  private Usuario obtenerUsuarioActual() {
 
-        // Inicializar las vistas
-        Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
-        Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
-        Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
-
-        String nombres = layoutNombres.getEditText().getText().toString().trim();
-        String apellidos = layoutApellido.getEditText().getText().toString().trim();
-        String cedula = layoutCedula.getEditText().getText().toString().trim();
-        String numeroTelefonico = layoutPhone.getEditText().getText().toString().trim();
-        String direccion = layoutDireccion.getEditText().getText().toString().trim();
-        String genero = nSpinnerGenero.getSelectedItem().toString();
-        String provincia = nSpinnerProvincia.getSelectedItem().toString();
-        String ciudad = nSpinnerCiudad.getSelectedItem().toString();
-
-        // Crear un nuevo objeto Usuario
-        Usuario usuarioActualizado = new Usuario();
-
-
-        // Guardar el usuario en la base de datos
-        boolean resultados = databaseHelper.actualizarUsuario(usuarioActualizado);
-        if (resultados) {
-            Toast.makeText(this, "Usuario actualizado exitosamente", Toast.LENGTH_SHORT).show();
-            // Limpiar los campos después de guardar los datos
-
+        if (getIntent().hasExtra("usuario")) {
+            return (Usuario) getIntent().getSerializableExtra("usuario");
         } else {
-            Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_SHORT).show();
+            return null;
         }
+    }
 
+    private void llenarCamposUsuario() {
+        if (usuario != null) {
+
+            layoutNombres.getEditText().setText(usuario.getNombres());
+            layoutApellido.getEditText().setText(usuario.getApellidos());
+            layoutCedula.getEditText().setText(usuario.getCedula());
+            layoutPhone.getEditText().setText(usuario.getNumeroTelefonico());
+            layoutDireccion.getEditText().setText(usuario.getDireccion());
+            Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
+            Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
+            Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
+
+
+            // Seleccionar los valores adecuados en los spinners
+            seleccionarValorSpinner(nSpinnerGenero, usuario.getGenero());
+            seleccionarValorSpinner(nSpinnerProvincia, usuario.getProvincia());
+            seleccionarValorSpinner(nSpinnerCiudad, usuario.getCiudad());
+        }
+    }
+
+    private void seleccionarValorSpinner(Spinner spinner, String valor) {
+        ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spinner.getAdapter();
+        int position = adapter.getPosition(valor);
+        spinner.setSelection(position);
     }*/
 
 
-    public void ActualizarUsuario (View v){
 
-        // Crear un nuevo objeto Usuario
-        Usuario usuario = new Usuario();
+  /*  private void actualizarUsuario() {
+        Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
+        Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
+        Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
+       /* try (UsuarioHelper usuarioHelper = new UsuarioHelper(this)) {
+            SharedPreferences sharedPreferences = getSharedPreferences("usuarioID", Context.MODE_PRIVATE);
+            String usuarioID = sharedPreferences.getString("id", "0");
 
-        boolean success = databaseHelper.updateData(usuario.getId());
-            if (success) {
-                Toast.makeText(this, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
+           // usuario = usuarioHelper.actualizarUsuario(Integer.valueOf(usuarioID));
 
-            } else {
-                Toast.makeText(this, "Error al actualizar los datos", Toast.LENGTH_SHORT).show();
-            }
+        }
+
+        // Obtener los nuevos valores de los campos de texto
+        String nuevosNombres = layoutNombres.getEditText().getText().toString().trim();
+        String nuevosApellidos = layoutApellido.getEditText().getText().toString().trim();
+        String nuevaCedula = layoutCedula.getEditText().getText().toString().trim();
+        String nuevoGenero = nSpinnerGenero.getSelectedItem().toString();
+        String nuevoNumeroTelefonico = layoutPhone.getEditText().getText().toString().trim();
+        String nuevaDireccion = layoutDireccion.getEditText().getText().toString().trim();
+        String nuevaProvincia = nSpinnerProvincia.getSelectedItem().toString();
+        String nuevaCiudad = nSpinnerCiudad.getSelectedItem().toString();
+
+        // Validar que no haya campos vacíos
+        if (nuevosNombres.isEmpty() || nuevosApellidos.isEmpty() || nuevaCedula.isEmpty() || nuevoNumeroTelefonico.isEmpty() || nuevaDireccion.isEmpty() ) {
+            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Actualizar los datos del usuario
+
+        usuario.setNombres(nuevosNombres);
+        usuario.setApellidos(nuevosApellidos);
+        usuario.setCedula(nuevaCedula);
+        usuario.setGenero(nuevoGenero);
+        usuario.setNumeroTelefonico(nuevoNumeroTelefonico);
+        usuario.setDireccion(nuevaDireccion);
+        usuario.setProvincia(nuevaProvincia);
+        usuario.setCiudad(nuevaCiudad);
+
+        // Actualizar el usuario en la base de datos
+        int result = databaseHelper.actualizarUsuarios();
+
+        if (result>0){
+            Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
+            finish(); // Finalizar la actividad de actualización
+        } else {
+            Toast.makeText(this, "Error al actualizar usuario", Toast.LENGTH_SHORT).show();
+        }
     }
 
+    private void seleccionarValorSpinner(Spinner spinner, String valor) {
+        ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spinner.getAdapter();
+        int position = adapter.getPosition(valor);
+        spinner.setSelection(position);
+    }*/
 
-    public void CancelarRegistro(View v){
-        Intent call_principal = new Intent(v.getContext(), ActivityProductos.class);
-        startActivity(call_principal);
+    private void actualizar() {
+
+        // Obtener los nuevos valores de los campos de texto
+        Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
+        Spinner nSpinnerProvincia = findViewById(R.id.sp_provincia);
+        Spinner nSpinnerCiudad = findViewById(R.id.sp_ciudad);
+        String nuevosNombres = layoutNombres.getEditText().getText().toString().trim();
+        String nuevosApellidos = layoutApellido.getEditText().getText().toString().trim();
+        String nuevaCedula = layoutCedula.getEditText().getText().toString().trim();
+        String nuevoGenero = nSpinnerGenero.getSelectedItem().toString();
+        String nuevoNumeroTelefonico = layoutPhone.getEditText().getText().toString().trim();
+        String nuevaDireccion = layoutDireccion.getEditText().getText().toString().trim();
+        String nuevaProvincia = nSpinnerProvincia.getSelectedItem().toString();
+        String nuevaCiudad = nSpinnerCiudad.getSelectedItem().toString();
+        // Validar que no haya campos vacíos
+        if (nuevosNombres.isEmpty() || nuevosApellidos.isEmpty() || nuevaCedula.isEmpty() ||
+                nuevoNumeroTelefonico.isEmpty() || nuevaDireccion.isEmpty() ) {
+            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Actualizar los datos del usuario
+        usuario.setNombres(nuevosNombres);
+        usuario.setApellidos(nuevosApellidos);
+        usuario.setCedula(nuevaCedula);
+        usuario.setGenero(nuevoGenero);
+        usuario.setNumeroTelefonico(nuevoNumeroTelefonico);
+        usuario.setDireccion(nuevaDireccion);
+        usuario.setProvincia(nuevaProvincia);
+        usuario.setCiudad(nuevaCiudad);
+
+        // Guardar los nuevos datos del usuario en SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nombres", nuevosNombres);
+        editor.putString("apellidos", nuevosApellidos);
+        editor.putString("cedula", nuevaCedula);
+        editor.putString("genero", nuevoGenero);
+        editor.putString("numero_telefonico", nuevoNumeroTelefonico);
+        editor.putString("direccion", nuevaDireccion);
+        editor.putString("provincia", nuevaProvincia);
+        editor.putString("ciudad", nuevaCiudad);
+        editor.apply();
+
+        Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
+        finish(); // Finalizar la actividad de actualización
     }
+
 
 
 }
