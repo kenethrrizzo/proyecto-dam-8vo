@@ -33,6 +33,7 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
     private List<Producto> productos;
     private RecyclerView recyclerView;
 
+    @SuppressLint("MutatingSharedPrefs")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +140,12 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
                     startActivity(intent);
                     return true;
                 } else if (itemId == R.id.menu_cerrar_sesion) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("CarritoDeCompras", Context.MODE_PRIVATE);
+                    Set<String> productosIds = sharedPreferences.getStringSet("productos", new HashSet<>());
+                    productosIds.clear();
+                    @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putStringSet("productos", productosIds);
+                    editor.apply();
                     Intent intent = new Intent(this, ActivityLogin.class);
                     startActivity(intent);
                     return true;
