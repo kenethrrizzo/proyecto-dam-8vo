@@ -22,18 +22,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 
 public class ActivityConsultarUsuario extends AppCompatActivity {
-
-    private String nSpinnerGenero = "";
-    private String nSpinnerProvincia = "";
-    private String nSpinnerCiudad = "";
     private TextInputLayout layoutNombres, layoutApellido, layoutCedula, layoutPhone, layoutDireccion;
     TextInputEditText txt_nombres,txt_apellidos, txt_cedula,txt_numeroTelefonico, txt_direccion;
-
     private Usuario usuario;
     private Button btnActualizar;
     private SharedPreferences sharedPreferences;
     private Spinner spinnerGenero, spinnerProvincia, spinnerCiudad;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,71 +67,10 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
         ciudadAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCiudad.setAdapter(ciudadAdapter);
 
-
-        /*Spinner spinner2 = (Spinner) findViewById(R.id.sp_genero);
-        Spinner spinner3 = (Spinner) findViewById(R.id.sp_provincia);
-        Spinner spinner4 = (Spinner) findViewById(R.id.sp_ciudad);
-
-
-        //Create ArrayAdapter
-       ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.genero,
-                android.R.layout.simple_spinner_item);
-
-        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this, R.array.Provincia,
-                android.R.layout.simple_spinner_item);
-
-        ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(this, R.array.Ciudad,
-                android.R.layout.simple_spinner_item);
-
-        // especifico el diseño que se utilizara cuando aparezca la lista de opciones
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //Aplicar el adaptador al spinner
-        spinner2.setAdapter(adapter2);
-        spinner3.setAdapter(adapter3);
-        spinner4.setAdapter(adapter4);
-
-        //Controlar acciones del spinner
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerGenero = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerGenero, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerProvincia = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerProvincia, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        spinner4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nSpinnerCiudad = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Ha escogido:" + nSpinnerCiudad, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
         // Configuración del botón Actualizar
         btnActualizar = findViewById(R.id.btn_actualizar);
         btnActualizar.setOnClickListener(v -> actualizar());
+
 
         //Consutar el usuario
         try (UsuarioHelper helper = new UsuarioHelper(this)) {
@@ -147,7 +80,6 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
             usuario = helper.getUsuarioPorId(Integer.valueOf(usuarioId));
 
         }
-
 
         txt_nombres.setText(usuario.getNombres());
         txt_apellidos.setText(usuario.getApellidos());
@@ -161,15 +93,11 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
 
     }
 
-
     private void seleccionarValorSpinner(Spinner spinner, String valor) {
         ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spinner.getAdapter();
         int position = adapter.getPosition(valor);
         spinner.setSelection(position);
     }
-
-
-    UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
 
     private void actualizar() {
 
@@ -191,7 +119,6 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
-
         // Actualizar los datos del usuario
         usuario.setNombres(nuevosNombres);
         usuario.setApellidos(nuevosApellidos);

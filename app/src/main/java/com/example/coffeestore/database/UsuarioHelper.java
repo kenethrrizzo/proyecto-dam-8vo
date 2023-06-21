@@ -115,8 +115,6 @@ public class UsuarioHelper extends SQLiteOpenHelper {
             usuario.setProvincia(cursor.getString(cursor.getColumnIndex(COLUMN_PROVINCIA)));
             usuario.setNumeroTelefonico(cursor.getString(cursor.getColumnIndex(COLUMN_NUMERO_TELEFONICO)));
         }
-
-
         cursor.close();
 
         return usuario;
