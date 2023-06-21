@@ -1,7 +1,5 @@
 package com.example.coffeestore.dto;
 
-import java.util.Date;
-
 public class Usuario {
 
     public Usuario() {}
@@ -20,10 +18,7 @@ public class Usuario {
 
 
     // Getters y Setters
-    public Integer getId() {
-        return id;
-    }
-
+    public Integer getId() {return id;}
     public void setId(Integer id) {
         this.id = id;
     }
@@ -31,15 +26,10 @@ public class Usuario {
     public String getNombres() {
         return nombres;
     }
-
     public void setNombres(String nombres) {
         this.nombres = nombres;
     }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
+    public String getApellidos() {return apellidos;}
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
@@ -47,15 +37,12 @@ public class Usuario {
     public String getCedula() {
         return cedula;
     }
-
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
-
     public String getGenero() {
         return genero;
     }
-
     public void setGenero(String generos) {
         this.genero = generos;
     }
@@ -63,11 +50,9 @@ public class Usuario {
     public String getNumeroTelefonico() {
         return numeroTelefonico;
     }
-
     public void setNumeroTelefonico(String numeroTelefonico) {
         this.numeroTelefonico = numeroTelefonico;
     }
-
     public String getProvincia() {
         return provincia;
     }

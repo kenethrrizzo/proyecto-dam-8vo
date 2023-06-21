@@ -16,12 +16,10 @@ import com.example.coffeestore.dto.Usuario;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class ActivityRegistro extends AppCompatActivity {
-
     private String nSpinnerGenero = "";
     private String nSpinnerProvincia = "";
     private String nSpinnerCiudad = "";
     private TextInputLayout layoutNombres, layoutApellido, layoutCedula, layoutPhone, layoutDireccion, layoutPassword;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +99,6 @@ public class ActivityRegistro extends AppCompatActivity {
     }
 
     UsuarioHelper databaseHelper = new UsuarioHelper(this); // Pasa el contexto actual
-
     public void registrarUsuario(View v) {
         // Inicializar las vistas
         Spinner nSpinnerGenero = findViewById(R.id.sp_genero);
@@ -141,6 +138,8 @@ public class ActivityRegistro extends AppCompatActivity {
             layoutPhone.getEditText().setText("");
             layoutDireccion.getEditText().setText("");
             layoutPassword.getEditText().setText("");
+            Intent call_producto = new Intent(v.getContext(), ActivityProductos.class);
+            startActivity(call_producto);
         } else {
             Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
         }
