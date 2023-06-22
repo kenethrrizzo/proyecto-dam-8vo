@@ -140,7 +140,7 @@ public class ActivityConsultarUsuario extends AppCompatActivity {
         }
 
         Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
-        finish(); // Finalizar la actividad de actualización
+        //finish(); // Finalizar la actividad de actualización
     }
     public void CancelarRegistro (View v){
         Intent call_producto = new Intent(v.getContext(), ActivityProductos.class);
