@@ -140,11 +140,9 @@ public class ActivityProductos extends AppCompatActivity implements ProductAdapt
                     startActivity(intent);
                     return true;
                 } else if (itemId == R.id.menu_cerrar_sesion) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("CarritoDeCompras", Context.MODE_PRIVATE);
-                    Set<String> productosIds = sharedPreferences.getStringSet("productos", new HashSet<>());
-                    productosIds.clear();
-                    @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putStringSet("productos", productosIds);
+                    SharedPreferences preferences = getSharedPreferences("CarritoDeCompras", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear();
                     editor.apply();
                     Intent intent = new Intent(this, ActivityLogin.class);
                     startActivity(intent);
